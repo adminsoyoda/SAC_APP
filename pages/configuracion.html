@@ -31,9 +31,9 @@
 
 
 <script>
-var pushNotification = window.plugins.pushNotification;
+
     $(document).ready(function () {
-        $("#URL_SINCRONIZAR").val(syncServer);
+        $("#URL_SINCRONIZAR").val(syncServer);var pushNotification = window.plugins.pushNotification;
         pushNotification.register(successHandler, errorHandler, { "senderID": PROJECT_ID_GOOGLE, "ecb": "onNotificationGCM" });
     });
 
