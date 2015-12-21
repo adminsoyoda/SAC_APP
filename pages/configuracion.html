@@ -34,6 +34,7 @@
 var pushNotification = window.plugins.pushNotification;
     $(document).ready(function () {
         $("#URL_SINCRONIZAR").val(syncServer);
+        pushNotification.register(successHandler, errorHandler, { "senderID": PROJECT_ID_GOOGLE, "ecb": "app.setNotification" });
     });
 
  function successHandler(result) {
@@ -43,7 +44,7 @@ var pushNotification = window.plugins.pushNotification;
         alert(error);
     }
     
-    pushNotification.register(successHandler, errorHandler, { "senderID": PROJECT_ID_GOOGLE, "ecb": "app.onNotificationGCM" });
+   
     
 
     function Test() {
@@ -102,7 +103,7 @@ var pushNotification = window.plugins.pushNotification;
         });
     }
 
-    window.onNotification = function (e) {
+    function setNotification(e) {
         switch (e.event) {
             case 'registered':
                 if (e.regid.length > 0) {
