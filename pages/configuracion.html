@@ -27,11 +27,23 @@
 <link rel="stylesheet" href="public/html/plugins/fullcalendar/fullcalendar.min.css">
 <link rel="stylesheet" href="public/html/plugins/fullcalendar/fullcalendar.print.css" media="print">
 <script src="public/html/plugins/fullcalendar/fullcalendar.min.js"></script>
+<!--  <script src="public/jquery/sync/PushNotification.js"></script>-->
+
 
 <script>
     $(document).ready(function () {
         $("#URL_SINCRONIZAR").val(syncServer);
     });
+
+ function successHandler(result) {
+        alert(result);
+    }
+    function errorHandler(error) {
+        alert(error);
+    }
+    
+    //window.plugins.pushNotification.register(successHandler, errorHandler, { "senderID": PROJECT_ID_GOOGLE, "ecb": "app.onNotificationGCM" });
+        
 
     function Test() {
         AjaxSAC(syncServer, "", true, function (callback) {

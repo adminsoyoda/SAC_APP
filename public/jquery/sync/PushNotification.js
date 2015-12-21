@@ -1,10 +1,11 @@
 
-var PushNotification = function() {
-};
+	function pushNotificationClass() {
+
+	}
 
 
 	// Call this to register for push notifications. Content of [options] depends on whether we are working with APNS (iOS) or GCM (Android)
-	PushNotification.prototype.register = function(successCallback, errorCallback, options) {
+	pushNotificationClass.prototype.register = function(successCallback, errorCallback, options) {
     	if (errorCallback == null) { errorCallback = function() {}}
 
 		if (typeof errorCallback != "function")  {
@@ -21,7 +22,7 @@ var PushNotification = function() {
 	};
 
     // Call this to unregister for push notifications
-    PushNotification.prototype.unregister = function(successCallback, errorCallback) {
+    pushNotificationClass.prototype.unregister = function(successCallback, errorCallback) {
 		if (errorCallback == null) { errorCallback = function() {}}
 
 		if (typeof errorCallback != "function")  {
@@ -39,7 +40,7 @@ var PushNotification = function() {
  
  
     // Call this to set the application icon badge
-    PushNotification.prototype.setApplicationIconBadgeNumber = function(successCallback, badge) {
+    pushNotificationClass.prototype.setApplicationIconBadgeNumber = function(successCallback, badge) {
 		if (errorCallback == null) { errorCallback = function() {}}
 
 		if (typeof errorCallback != "function")  {
@@ -57,9 +58,9 @@ var PushNotification = function() {
 
 //-------------------------------------------------------------------
 
-if(!window.plugins) {
-	window.plugins = {};
-}
-if (!window.plugins.pushNotification) {
-	window.plugins.pushNotification = new PushNotification();
-}
+	if(!window.plugins) {
+		window.plugins = {};
+	}
+	if (!window.plugins.pushNotification) {
+		window.plugins.pushNotification = new pushNotificationClass();
+	}
