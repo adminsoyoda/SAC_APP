@@ -1,0 +1,162 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>SAC Ventas | Login</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="public/html/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="public/html/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="public/html/dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="public/html/plugins/iCheck/flat/blue.css">
+    <link rel="stylesheet" href="public/html/plugins/morris/morris.css">
+    <link rel="stylesheet" href="public/html/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <link rel="stylesheet" href="public/html/plugins/datepicker/datepicker3.css">
+    <link rel="stylesheet" href="public/html/plugins/daterangepicker/daterangepicker-bs3.css">
+    <link rel="stylesheet" href="public/html/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    <script src="public/jquery/cloud/jquery-ui.min.js"></script>
+    <script src="public/html/bootstrap/js/bootstrap.min.js"></script>
+    <script src="public/jquery/cloud/raphael-min.js"></script>
+    <script src="public/html/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <script src="public/html/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="public/html/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="public/html/plugins/knob/jquery.knob.js"></script>
+    <script src="public/jquery/cloud/moment.min.js"></script>
+    <script src="public/html/plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="public/html/plugins/datepicker/bootstrap-datepicker.js"></script>
+    <script src="public/html/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+    <script src="public/html/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <script src="public/html/plugins/fastclick/fastclick.min.js"></script>
+    <script src="public/html/dist/js/app.min.js"></script>
+    <script src="public/html/dist/js/demo.js"></script>
+    <link rel="stylesheet" href="public/html/plugins/fullcalendar/fullcalendar.min.css">
+    <link rel="stylesheet" href="public/html/plugins/fullcalendar/fullcalendar.print.css" media="print">
+    <script src="public/html/plugins/fullcalendar/fullcalendar.min.js"></script>
+    <link rel="stylesheet" href="public/html/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="public/html/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="public/html/plugins/iCheck/square/blue.css">
+    <script src="public/html/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <script src="public/html/bootstrap/js/bootstrap.min.js"></script>
+    <script src="public/html/plugins/iCheck/icheck.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    
+    <script>
+        $(document).ready(function () {
+            BDConsulta("SELECT COUNT(*) CONT FROM sqlite_master WHERE type='table' AND name='APP_USUARIO';", function (obj) {
+                if (obj.CONT != 0) {
+                    BDConsulta("SELECT COUNT(*) CONT FROM APP_USUARIO", function (obj) {
+                        if (obj.CONT > 0) {
+                            BDConsulta("SELECT * FROM APP_USUARIO", function (obj) {
+                                if (obj.ACTIVO == 'A') {
+                                    contentPage('pages/main.html');
+                                }
+                            });
+                        } 
+                    });
+                } else {
+                    alert("Por favor Realizar la Configuracion de la aplicacion...");
+                }
+            });
+        });
+
+        function LoginEnter(evento) {
+            var key = validaEvento(evento);
+            if (key == 13) { Login(); } else { return true; }
+        }
+
+        function Login() {
+            if ($("#txt_user").val() == '') { alert("Ingresar Usuario...");  $("#txt_user").focus(); return true; }
+            if ($("#txt_pass").val() == '') { alert("Ingresar Password..."); $("#txt_pass").focus(); return true; }
+
+
+            BDConsulta("SELECT COUNT(*) CONT FROM APP_USUARIO WHERE USUARIO='" + $("#txt_user").val() + "' AND PASS='" + $("#txt_pass").val() + "' ", function (obj) {
+                if (obj.CONT > 0) {
+                    BDActualizacion("UPDATE APP_USUARIO SET ACTIVO='A'");
+                    contentPage('pages/main.html');
+                } else {
+                    alert("Error en Credenciales...");
+                    $("#txt_user").focus();
+                }
+            });
+
+        }
+
+        function LoginConciliacion(evento) {
+            var key = validaEvento(evento);
+            if (key == 13) { entrarConfig(); } else { return true; }
+        }
+
+        function configuracion() {
+            $("#AppSegPassConfig").show(100);
+            $("#AppButtonConfig").hide();
+            $("#txt_pass_config").focus();
+        }
+
+        function entrarConfig() {
+            $("#loader_sys").show();
+            AjaxSAC(syncServer + "/TestPassConfig", "", true, function (callback) {
+                if (callback == $("#txt_pass_config").val()) {
+                    contentPage('pages/configuracion.html');
+                } else {
+                    alert("Error en Credenciales de acceso...");
+                }
+            });
+        }
+
+    </script>
+  </head>
+  <body class="hold-transition" style='background-color:#F2F2F2;'>
+    
+    <div class="login-box">
+      <div class="login-logo">
+        <a href="#"></a>
+      </div>
+      <div class="login-box-body" style=' border:1px solid #CCC;'>
+        <p class="login-box-msg">
+        <img src='public/images/Logo.png' width="120px" />
+        </p>
+        <div>
+          <div class="form-group has-feedback">
+            <input id="txt_user" type="text" class="form-control" placeholder="Usuario" onkeypress="return LoginEnter(event);">
+            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+          </div>
+          <div class="form-group has-feedback">
+            <input id="txt_pass" type="password" class="form-control" placeholder="Password" onkeypress="return LoginEnter(event);">
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+          </div>
+          <div class="row">
+            <div class="col-xs-8">
+              <div class="checkbox icheck">
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <button onclick='Login()'  class="btn btn-primary btn-block btn-flat">Entrar</button>
+            </div>
+          </div>
+        </div>
+
+        <br />
+        <hr />
+        <div class="form-group has-feedback" id="AppSegPassConfig" style="display:none">
+            <input id="txt_pass_config" type="password" class="form-control" placeholder="Password Configuracion" onkeypress="return LoginConciliacion(event);">
+            <span class="glyphicon glyphicon-cog form-control-feedback"></span>
+            <div class="social-auth-links text-center">
+              <br />
+              <a href="#" onclick='entrarConfig();' class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-gears"></i> Entrar a Configuracion Inicial del Sistema</a>
+            </div>
+        </div>
+        
+        <div class="social-auth-links text-center" id='AppButtonConfig'>
+          <br />
+          <a href="#" onclick='configuracion();' class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-gears"></i> <span>Configuracion Inicial del Sistema</span></a>
+        </div>
+        <a href="#"></a><br/>
+        <a href="http://www.soyoda.com/edoc"  target="_blank" class="text-center">Entrar a Facturacion Electronica</a>
+        
+      </div>
+    </div>
+
+  </body>
+</html>
