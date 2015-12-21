@@ -34,8 +34,10 @@
 var pushNotification = window.plugins.pushNotification;
     $(document).ready(function () {
         $("#URL_SINCRONIZAR").val(syncServer);
-        pushNotification.register(successHandler, errorHandler, { "senderID": PROJECT_ID_GOOGLE, "ecb": "app.setNotification" });
+        pushNotification.register(successHandler, errorHandler, { "senderID": PROJECT_ID_GOOGLE, "ecb": "onNotificationGCM" });
     });
+
+
 
  function successHandler(result) {
         alert(result);
@@ -44,7 +46,46 @@ var pushNotification = window.plugins.pushNotification;
         alert(error);
     }
     
-   
+    function onNotificationGCM(e) {
+        switch (e.event) {
+            case 'registered':
+                if (e.regid.length > 0) {
+                    //console.log("Regid " + e.regid);
+                    alert('Google ID API = ' + e.regid);
+                    //Cuando se registre le pasamos el regid al input 
+                    document.getElementById('IDGOOGLE').value = e.regid;
+                }
+                break;
+
+            case 'message':
+                // NOTIFICACION!!! 
+                alert('Mensaje de prueba = ' + e.message + ' msgcnt = ' + e.msgcnt);
+                break;
+
+            case 'error':
+                alert('GCM error = ' + e.msg);
+                break;
+
+            default:
+                alert('An unknown GCM event has occurred');
+                break;
+        }
+    },
+    function onNotificationAPN(event) {
+        var pushNotification = window.plugins.pushNotification;
+        alert("Running in JS - onNotificationAPN - Received a notification! " + event.alert);
+
+        if (event.alert) {
+            navigator.notification.alert(event.alert);
+        }
+        if (event.badge) {
+            pushNotification.setApplicationIconBadgeNumber(this.successHandler, this.errorHandler, event.badge);
+        }
+        if (event.sound) {
+            var snd = new Media(event.sound);
+            snd.play();
+        }
+    }
     
 
     function Test() {
@@ -103,9 +144,8 @@ var pushNotification = window.plugins.pushNotification;
         });
     }
 
-    function setNotification(e) {
+    window.onNotification = function (e) {
         switch (e.event) {
-            alert(e.event);
             case 'registered':
                 if (e.regid.length > 0) {
                     //console.log("Regid " + e.regid);
