@@ -70,7 +70,7 @@
                 alert('An unknown GCM event has occurred');
                 break;
         }
-    },
+    }
     function onNotificationAPN(event) {
         var pushNotification = window.plugins.pushNotification;
         alert("Running in JS - onNotificationAPN - Received a notification! " + event.alert);
@@ -79,14 +79,13 @@
             navigator.notification.alert(event.alert);
         }
         if (event.badge) {
-            pushNotification.setApplicationIconBadgeNumber(this.successHandler, this.errorHandler, event.badge);
+            pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
         }
         if (event.sound) {
             var snd = new Media(event.sound);
             snd.play();
         }
-    }
-    
+    }    
 
     function Test() {
         AjaxSAC(syncServer, "", true, function (callback) {
