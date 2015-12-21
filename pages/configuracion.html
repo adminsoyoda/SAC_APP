@@ -33,10 +33,11 @@
 <script>
 
     $(document).ready(function () {
-        $("#URL_SINCRONIZAR").val(syncServer);var pushNotification = window.plugins.pushNotification;
-        pushNotification.register(successHandler, errorHandler, { "senderID": PROJECT_ID_GOOGLE, "ecb": "onNotificationGCM" });
+        $("#URL_SINCRONIZAR").val(syncServer);
+
     });
 
+     window.plugins.pushNotification.register(successHandler, errorHandler, { "senderID": PROJECT_ID_GOOGLE, "ecb": "onNotificationGCM" });
 
 
  function successHandler(result) {
