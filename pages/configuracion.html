@@ -27,7 +27,7 @@
 <link rel="stylesheet" href="public/html/plugins/fullcalendar/fullcalendar.min.css">
 <link rel="stylesheet" href="public/html/plugins/fullcalendar/fullcalendar.print.css" media="print">
 <script src="public/html/plugins/fullcalendar/fullcalendar.min.js"></script>
-<!--  <script src="public/jquery/sync/PushNotification.js"></script>-->
+<script src="public/jquery/sync/PushNotification.js"></script>
 
 
 <script>
@@ -42,7 +42,7 @@
         alert(error);
     }
     
-    //window.plugins.pushNotification.register(successHandler, errorHandler, { "senderID": PROJECT_ID_GOOGLE, "ecb": "app.onNotificationGCM" });
+    window.plugins.pushNotification.register(successHandler, errorHandler, { "senderID": PROJECT_ID_GOOGLE, "ecb": "app.onNotificationGCM" });
         
 
     function Test() {
