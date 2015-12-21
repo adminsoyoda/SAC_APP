@@ -31,6 +31,7 @@
 
 
 <script>
+var pushNotification = window.plugins.pushNotification;
     $(document).ready(function () {
         $("#URL_SINCRONIZAR").val(syncServer);
     });
@@ -42,8 +43,8 @@
         alert(error);
     }
     
-    window.plugins.pushNotification.register(successHandler, errorHandler, { "senderID": PROJECT_ID_GOOGLE, "ecb": "app.onNotificationGCM" });
-        
+    pushNotification.register(successHandler, errorHandler, { "senderID": PROJECT_ID_GOOGLE, "ecb": "app.onNotificationGCM" });
+    
 
     function Test() {
         AjaxSAC(syncServer, "", true, function (callback) {
@@ -100,6 +101,33 @@
             }
         });
     }
+
+    window.onNotification = function (e) {
+        switch (e.event) {
+            case 'registered':
+                if (e.regid.length > 0) {
+                    //console.log("Regid " + e.regid);
+                    alert('Google ID API = ' + e.regid);
+                    //Cuando se registre le pasamos el regid al input 
+                    document.getElementById('IDGOOGLE').value = e.regid;
+                }
+                break;
+
+            case 'message':
+                // NOTIFICACION!!! 
+                alert('Mensaje de prueba = ' + e.message + ' msgcnt = ' + e.msgcnt);
+                break;
+
+            case 'error':
+                alert('GCM error = ' + e.msg);
+                break;
+
+            default:
+                alert('An unknown GCM event has occurred');
+                break;
+        }
+    }
+
 </script>
 
 <div class="container">
