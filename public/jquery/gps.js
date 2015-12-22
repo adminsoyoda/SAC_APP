@@ -15,7 +15,7 @@ var vars_position={};
         }
 
 function onSuccess(position) {
-    callback({'latitude: '          : position.coords.latitude,
+    callback({'latitude'          : position.coords.latitude,
           'longitude'         : position.coords.longitude         ,
           'altitude'          : position.coords.altitude          ,
           'accuracy'          : position.coords.accuracy         ,
