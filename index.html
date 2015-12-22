@@ -31,7 +31,7 @@
              
                  navigator.geolocation.getCurrentPosition(function(position){
                 updateGPS(position);
-                alert("por internet");
+                alert("intento 2");
               });
               
 
@@ -40,7 +40,7 @@
             try{
              navigator.geolocation.getCurrentPosition(function(position){
                 updateGPS(position);
-                alert("por gps");
+                alert("intento 1");
               },failgps,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });      
 
             }catch(e){
