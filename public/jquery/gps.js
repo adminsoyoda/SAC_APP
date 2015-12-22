@@ -1,45 +1,27 @@
-  
+ var values={};
 
-  function GPS(){
-    this.positions={};
-    this.state="none";
-    this.message="ok";
-    }
+  var wingps=function(position){
+      var coords=position.coords;
+      values["latitude"]=(coords.latitude); 
+      values["altitude"]=(coords.altitude);    
+      values["longitude"]=(coords.longitude);      
+      alert(values["latitude"]+";"+values["longitude"]+";"+values["altitude"]);
+  };
 
-  GPS.prototype.updateLocationPositions = function() {
-    GMaps.geolocate({
-            success: function(position) {
-              if (position.coords!=null){
-                this.positions["latitude"]=position.coords.latitude;
-                this.positions["longitude"]=position.coords.longitude;
-                this.positions["accuracy"]=position.coords.accuracy;
-                this.positions["altitude"]=position.coords.altitude;
-                this.positions["altitudeAccuracy"]=position.coords.altitudeAccuracy;
-                this.positions["heading"]=position.coords.heading;
-              }
-            
-            },
-            error: function(error) {
-               this.state="error";
-               this.message=error.message;
-            },
-            not_supported: function() {
-               this.state="not_supported";
-               this.message="Your browser does not support geolocation";
-               this.positions={};
-            },
-            always: function() {
-               this.state="done";
-               this.message="ok";
-      }
-    });
-  }
+  var failgps=function(e){
+      alert(e);
+  };
 
 
-  GPS.prototype.getLocationPositions = function() {
-    return this.positions;
-  }
 
+function getgpsvalues(location,CallbackWithValues){
+  location.getCurrentPosition(function(position){
+    wingps(position);
+    Callback(values);
+  },failgps); 
+    
+}
+        //  
  
 /*var vars_position={};
            

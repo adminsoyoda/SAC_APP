@@ -19,12 +19,28 @@
             contentPage('pages/login.html');
 
         });
-        function testgps(){
-            var gpsobject=new GPS();
-            gpsobject.updateLocationPositions();    
-            var v=gpsobject.getLocationPositions();
-            alert("latitude");
-        }
+var values={};
+var wingps=function(position){
+      var coords=position.coords;
+      values["latitude"]=(coords.latitude); 
+      values["altitude"]=(coords.altitude);    
+      values["longitude"]=(coords.longitude);      
+      alert(values["latitude"]+";"+values["longitude"]+";"+values["altitude"]);
+  };
+
+  var failgps=function(e){
+      alert(e);
+  };
+
+
+
+function testGPS(){
+  navigator.geolocation.getCurrentPosition(function(position){
+    wingps(position);
+  //  alert(values["latitude"]);
+  },failgps); 
+    
+}
     </script>
   </head>
   <body class="sidebar-mini skin-blue-light">
@@ -61,6 +77,6 @@
 
         <div id='content_master'></div>
         <br/>
-        <button type="button" onclick="testgps()">test</button>
+        <button type="button" onclick="testGPS()">test</button>
   </body>
 </html>
