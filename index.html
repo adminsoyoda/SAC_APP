@@ -28,13 +28,26 @@
               alert(values["latitude"]+";"+values["longitude"]+";"+values["altitude"]);
           };
         var failgps=function(e){
-              alert(e);
+              try{
+            navigator.geolocation.getCurrentPosition(function(position){
+                updateGPS(position);
+                alert("por internet");
+              });
+              }catch(err){
+               
+              }
+
           };
         function testGPS(){
-          navigator.geolocation.getCurrentPosition(function(position){
-            wingps(position);
-          //  alert(values["latitude"]);
-          },failgps,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });      
+            try{
+             navigator.geolocation.getCurrentPosition(function(position){
+                updateGPS(position);
+                alert("por gps");
+              },failgps,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });      
+
+            }catch(e){
+                alert(e);
+            }
         }
     </script>
   </head>
