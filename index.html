@@ -25,7 +25,7 @@
               values["latitude"]=(coords.latitude); 
               values["altitude"]=(coords.altitude);    
               values["longitude"]=(coords.longitude);      
-              alert("lat: "+values["latitude"]+"; long: "+values["longitude"]+"; altit:"+values["altitude"]+"; Precisión: "+position.coords.enableHighAccuracy+"; direcc: "+position.coords.heading);
+              alert("lat: "+values["latitude"]+"; long: "+values["longitude"]+"; altit:"+values["altitude"]+"; Precisión: "+position.coords.accuracy+"; direcc: "+position.coords.heading);
           };
         var failgps=function(e){
              
@@ -41,7 +41,7 @@
              navigator.geolocation.getCurrentPosition(function(position){
                 updateGPS(position);
                 alert("intento 1");
-              },failgps,{ maximumAge: 1000, timeout: 3000, enableHighAccuracy: true });      
+              },failgps,{ maximumAge: 4000, timeout: 3000, enableHighAccuracy: true });      
 
             }catch(e){
                 alert(e);
