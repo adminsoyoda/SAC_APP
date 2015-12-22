@@ -25,7 +25,7 @@
               values["latitude"]=(coords.latitude); 
               values["altitude"]=(coords.altitude);    
               values["longitude"]=(coords.longitude);      
-              alert(values["latitude"]+";"+values["longitude"]+";"+values["altitude"]);
+              alert("lat: "+values["latitude"]+"; long: "+values["longitude"]+"; altit:"+values["altitude"]+"; Precisión: "+position.coords.enableHighAccuracy+"; direcc: "+position.coords.heading);
           };
         var failgps=function(e){
              
