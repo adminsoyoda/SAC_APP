@@ -16,7 +16,11 @@
             contentPage('pages/login.html');
 
         });
-      //  alert(getLocation());
+   function testgps(){
+  var vars=getVarsLocation();
+        alert(vars["longitude"]);
+         alert(vars["latitude"]);            
+        }
     </script>
   </head>
   <body class="sidebar-mini skin-blue-light">
@@ -52,5 +56,7 @@
         </div>
 
         <div id='content_master'></div>
+        <br/>
+        <button type="button" onclick="testgps()">test</button>
   </body>
 </html>
