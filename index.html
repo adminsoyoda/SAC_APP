@@ -41,7 +41,7 @@
              navigator.geolocation.getCurrentPosition(function(position){
                 updateGPS(position);
                 alert("intento 1");
-              },failgps,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });      
+              },failgps,{ maximumAge: 1000, timeout: 3000, enableHighAccuracy: true });      
 
             }catch(e){
                 alert(e);
