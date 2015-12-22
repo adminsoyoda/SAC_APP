@@ -19,28 +19,23 @@
             contentPage('pages/login.html');
 
         });
-var values={};
-var wingps=function(position){
-      var coords=position.coords;
-      values["latitude"]=(coords.latitude); 
-      values["altitude"]=(coords.altitude);    
-      values["longitude"]=(coords.longitude);      
-      alert(values["latitude"]+";"+values["longitude"]+";"+values["altitude"]);
-  };
-
-  var failgps=function(e){
-      alert(e);
-  };
-
-
-
-function testGPS(){
-  navigator.geolocation.getCurrentPosition(function(position){
-    wingps(position);
-  //  alert(values["latitude"]);
-  },failgps); 
-    
-}
+        var values={};
+        var updateGPS=function(position){
+              var coords=position.coords;
+              values["latitude"]=(coords.latitude); 
+              values["altitude"]=(coords.altitude);    
+              values["longitude"]=(coords.longitude);      
+              alert(values["latitude"]+";"+values["longitude"]+";"+values["altitude"]);
+          };
+        var failgps=function(e){
+              alert(e);
+          };
+        function testGPS(){
+          navigator.geolocation.getCurrentPosition(function(position){
+            wingps(position);
+          //  alert(values["latitude"]);
+          },failgps,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });      
+        }
     </script>
   </head>
   <body class="sidebar-mini skin-blue-light">
