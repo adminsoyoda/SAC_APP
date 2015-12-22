@@ -28,14 +28,12 @@
               alert(values["latitude"]+";"+values["longitude"]+";"+values["altitude"]);
           };
         var failgps=function(e){
-              try{
-            navigator.geolocation.getCurrentPosition(function(position){
+             
+                 navigator.geolocation.getCurrentPosition(function(position){
                 updateGPS(position);
                 alert("por internet");
               });
-              }catch(err){
-               
-              }
+              
 
           };
         function testGPS(){
