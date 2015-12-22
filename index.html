@@ -10,17 +10,20 @@
     <script src="public/jquery/APP.js"></script>
     <script src="public/jquery/Sync.js"></script>
     <script src="cordova.js"></script>
+    <script src="public/jquery/maps/map.api.js"></script>
+    <script src="public/jquery/maps/gmaps.js"></script>
+    <script src="public/jquery/maps/gmaps.min.js"></script>
     <script src="public/jquery/gps.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             contentPage('pages/login.html');
 
         });
-   function testgps(){
-  var nvars=getVarsLocation();
-        alert(nvars["longitude"]);         
-          alert(nvars["latitude"]);       
-          alert(nvars["altitude"]);  
+        function testgps(){
+            var gpsobject=new GPS();
+            gpsobject.updateLocationPositions();    
+            var v=gpsobject.getLocationPositions();
+            alert("latitude");
         }
     </script>
   </head>
