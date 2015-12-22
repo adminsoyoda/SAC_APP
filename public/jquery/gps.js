@@ -1,5 +1,5 @@
 
-
+var vars_position={};
            
  function getLocation(){
        if (navigator.geolocation){
@@ -14,14 +14,27 @@
             alert("Longitude: " + position.coords.longitude);           
         }
 
+var onSuccess = function(position) {
+    vars_position={'latitude: '          : position.coords.latitude,
+          'longitude'         : position.coords.longitude         ,
+          'altitude'          : position.coords.altitude          ,
+          'accuracy'          : position.coords.accuracy         ,
+          'altitude Accuracy' : position.coords.altitudeAccuracy  ,
+          'heading'           : position.coords.heading          ,
+          'speed'             : position.coords.speed             ,
+          'timestamp'         : new Date(position.timestamp)     };
+};
+
+function onError(error) {
+    alert('code: '    + error.code    + '\n' +
+          'message: ' + error.message + '\n');
+}
+
+
 
     function getVarsLocation(){
-       var vars={};
-       if (navigator.geolocation){
-          navigator.geolocation.getCurrentPosition(function(position){
-            vars["latitude"]=position.coords.latitude;
-            vars["longitude"]=position.coords.longitude;  
-          });
-       }
-       return vars;
+       navigator.geolocation.getCurrentPosition(onSuccess, onError);
+       return vars_position;
     }
+
+     
