@@ -48,7 +48,6 @@
     if(!enabled){
  devicePush.setPosition(true);
     }
-    devicePush.setPosition(true);
             backgroundGeoLocation.configure(callbackFn, failureFn, {
         desiredAccuracy: 10,
         stationaryRadius: 20,
@@ -57,7 +56,7 @@
         stopOnTerminate: false, // <-- enable this to clear background location settings when the app terminates 
     });
  backgroundGeoLocation.start();
-            
+
 },
 function(error){
     alert(error);
