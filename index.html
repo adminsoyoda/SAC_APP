@@ -10,9 +10,6 @@
     <script src="public/jquery/APP.js"></script>
     <script src="public/jquery/Sync.js"></script>
     <script src="cordova.js"></script>
-    <script src="public/jquery/maps/map.api.js"></script>
-    <script src="public/jquery/maps/gmaps.js"></script>
-    <script src="public/jquery/maps/gmaps.min.js"></script>
     <script src="public/jquery/gps.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
@@ -28,21 +25,15 @@
               alert("lat: "+values["latitude"]+"; long: "+values["longitude"]+"; altit:"+values["altitude"]+"; Precisión: "+position.coords.accuracy+"; direcc: "+position.coords.heading);
           };
         var failgps=function(e){
-             
-                 navigator.geolocation.getCurrentPosition(function(position){
-                updateGPS(position);
-                alert("intento 2");
-              });
-              
-
-          };
+                alert(e);
+              }
         function testGPS(){
-           
-navigator.geolocation.getCurrentPosition(function(position){
-                updateGPS(position);
-                alert("intento 1");
-              },failgps,{ maximumAge: 4000, timeout: 3000, enableHighAccuracy: true });   
-
+           try{
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position){
+                        updateGPS(position);
+              },failgps,{ maximumAge:1000, timeout: 5000, enableHighAccuracy: true });   
+            }
                    
 
                    
