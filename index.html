@@ -10,7 +10,7 @@
     <script src="public/jquery/APP.js"></script>
     <script src="public/jquery/Sync.js"></script>
     <script src="cordova.js"></script>
-    <script src="public/jquery/gps.js"></script>
+    <script src="public/jquery/geo.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             contentPage('pages/login.html');
@@ -25,14 +25,17 @@
               alert("lat: "+values["latitude"]+"; long: "+values["longitude"]+"; altit:"+values["altitude"]+"; Precisión: "+position.coords.accuracy+"; direcc: "+position.coords.heading);
           };
         var failgps=function(e){
-                alert(e);
+                //alert(e);
               }
         function testGPS(){
            try{
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position){
-                        updateGPS(position);
-              },failgps,{ maximumAge:1000, timeout: 5000, enableHighAccuracy: true });   
+                navigator.geolocation.getAccurateCurrentPosition(updateGPS, failgps,function(position){
+
+                } ,{desiredAccuracy:20, maxWait:15000});
+/*                navigator.geolocation.getCurrentPosition(function(position){
+                        updateGPS(position);*/
+                 
             }
                    
 
