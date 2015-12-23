@@ -19,7 +19,18 @@
             contentPage('pages/login.html');
 
         });
-        var values={};
+
+        var callbackFn = function(location) {
+        alert('[js] BackgroundGeoLocation callback:  ' + location.latitude + ',' + location.longitude);
+            backgroundGeoLocation.finish();
+        };
+ 
+        var failureFn = function(error) {
+            console.log('BackgroundGeoLocation error');
+        };
+
+
+/*        var values={};
         var updateGPS=function(position){
               var coords=position.coords;
               values["latitude"]=(coords.latitude); 
@@ -29,9 +40,21 @@
           };
         var failgps=function(e){
                 alert(e);
-              };
+              };*/
         function testGPS(){
-           try{
+
+            backgroundGeoLocation.configure(callbackFn, failureFn, {
+        desiredAccuracy: 10,
+        stationaryRadius: 20,
+        distanceFilter: 30,
+        debug: true, // <-- enable this hear sounds for background-geolocation life-cycle. 
+        stopOnTerminate: false, // <-- enable this to clear background location settings when the app terminates 
+    });
+ 
+    // Turn ON the background-geolocation system.  The user will be tracked whenever they suspend the app. 
+    backgroundGeoLocation.start();
+    
+    /*       try{
 
             cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
     console.log("Location is " + (enabled ? "enabled" : "disabled"));
@@ -66,11 +89,18 @@ function(position){
 
             }catch(e){
                 alert(e);
-            }
+            }*/
+
+
+
+
+
         }
 
         function testGPS2(){
-          
+
+        }
+          /*
 cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
     console.log("Location is " + (enabled ? "enabled" : "disabled"));
     if(!enabled){
@@ -103,7 +133,9 @@ if (ruta.length > 1) {
 for (i=1; i<ruta.length; i++) { muestra(ruta[i-1], ruta[i]); }
 }
 map.fitZoom();*/
-},
+
+
+/*},
 error: function(error) { smoke.alert('Error en la Geolocalización: '+error.message); },
 not_supported: function(){ smoke.alert("Su navegador no soporta geolocalización"); },
 });
@@ -116,7 +148,7 @@ not_supported: function(){ smoke.alert("Su navegador no soporta geolocalización"
 
 
           
-}
+}*/
 
         
     </script>
