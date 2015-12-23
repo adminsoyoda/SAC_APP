@@ -114,7 +114,6 @@
 
 <gap:plugin name="cordova-plugin-mauron85-background-geolocation-phonegapbuild" source="npm"/><!--geolocalizacion por interno-->
 
-<gap:plugin name="com.devicepush.cordova-phonegap" source="npm"></gap:plugin> <!--activa o no gps-->
 
 <allow-intent href="http://*/*" />
 <allow-intent href="https://*/*" />
