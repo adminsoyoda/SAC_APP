@@ -15,9 +15,7 @@
   Desarrollo Soyoda
 </author>
 
-  <!--<feature name="Geolocation">
-    <param name="android-package" value="org.apache.cordova.GeoBroker" />
-  </feature>-->
+ 
   
   <!--
     If you do not want any permissions to be added to your app, add the
