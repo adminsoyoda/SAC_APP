@@ -111,8 +111,6 @@
 <gap:plugin name="cordova.plugins.diagnostic" source="npm" version="2.2.4" /><!--verificar estados de los dispositivos-->
 
 <gap:plugin name="cordova-plugin-mauron85-background-geolocation-phonegapbuild" source="npm"/><!--geolocalizacion por interno-->
-<gap:plugin name="com.devicepush.cordova-phonegap" source="npm"></gap:plugin> <!--device push-->
-
 
 <allow-intent href="http://*/*" />
 <allow-intent href="https://*/*" />
