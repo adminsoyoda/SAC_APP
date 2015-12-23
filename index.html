@@ -33,6 +33,14 @@
                 navigator.geolocation.getCurrentPosition(function(position){
                         updateGPS(position);
               },failgps,{ maximumAge:1000, timeout: 5000, enableHighAccuracy: true });   
+alert(2);
+ navigator.geolocation.getAccurateCurrentPosition(
+function(position){
+ updateGPS(position);    
+},failgps,function(s){
+    alert(s);
+},{desiredAccuracy:20, maxWait:15000}
+    );
     }
                    
 
