@@ -10,7 +10,7 @@
     <script src="public/jquery/APP.js"></script>
     <script src="public/jquery/Sync.js"></script>
     <script src="cordova.js"></script>
-    <script src="public/jquery/geo.js"></script>
+<!--    <script src="public/jquery/geo.js"></script>-->
     <script src="public/jquery/maps/map.api.js"></script>
     <script src="public/jquery/maps/gmaps.js"></script>
     <script src="public/jquery/maps/gmaps.min.js"></script>
@@ -32,7 +32,14 @@
               };
         function testGPS(){
            try{
-            if (navigator.geolocation) {
+
+            cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
+    console.log("Location is " + (enabled ? "enabled" : "disabled"));
+    if(!enabled){
+        cordova.plugins.diagnostic.switchToLocationSettings();
+    }
+
+     if (navigator.geolocation) {
 
                 navigator.geolocation.getCurrentPosition(
 function(position){
@@ -42,6 +49,13 @@ function(position){
 
 
     }
+
+}, function(error){
+    console.error("The following error occurred: "+error);
+});
+
+
+           
                    
 
                    
@@ -57,8 +71,13 @@ function(position){
 
         function testGPS2(){
           
+cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
+    console.log("Location is " + (enabled ? "enabled" : "disabled"));
+    if(!enabled){
+        cordova.plugins.diagnostic.switchToLocationSettings();
 
-          GMaps.geolocate({
+
+        GMaps.geolocate({
 success: function(position){
 var lt, ln;
 //if (ruta.length == 0) {
@@ -88,6 +107,15 @@ map.fitZoom();*/
 error: function(error) { smoke.alert('Error en la Geolocalización: '+error.message); },
 not_supported: function(){ smoke.alert("Su navegador no soporta geolocalización"); },
 });
+
+
+    }
+}, function(error){
+    console.error("The following error occurred: "+error);
+});
+
+
+          
 }
 
         
