@@ -37,21 +37,13 @@
 
           };
         function testGPS(){
-            try{
-                    cordova.plugins.diagnostic.isLocationEnabledSetting(function(enabled){
-if(!enabled){
-     cordova.plugins.diagnostic.switchToSettings();//restaurar configuracion
-
-}
+           
 navigator.geolocation.getCurrentPosition(function(position){
                 updateGPS(position);
                 alert("intento 1");
               },failgps,{ maximumAge: 4000, timeout: 3000, enableHighAccuracy: true });   
 
-                    },function(e){
-alert(e);//error
-
-                    });
+                   
 
                    
                        
