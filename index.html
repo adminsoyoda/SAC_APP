@@ -11,6 +11,9 @@
     <script src="public/jquery/Sync.js"></script>
     <script src="cordova.js"></script>
     <script src="public/jquery/geo.js"></script>
+    <script src="public/jquery/maps/map.api.js"></script>
+    <script src="public/jquery/maps/gmaps.js"></script>
+    <script src="public/jquery/maps/gmaps.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             contentPage('pages/login.html');
@@ -51,6 +54,43 @@ function(position){
                 alert(e);
             }
         }
+
+        function testGPS2(){
+          
+
+          GMaps.geolocate({
+success: function(position){
+var lt, ln;
+//if (ruta.length == 0) {
+lt = position.coords.latitude;  // guarda coords en lat y lng
+ln = position.coords.longitude;
+  alert("lat: "+lt+"; long: "+ln+"; altit:"+position.coords.altitude+"; Precisión: "+position.coords.accuracy+"; direcc: "+position.coords.heading);
+
+/*}
+else
+{ lt = ruta[0][0]; ln = ruta[0][1];    }
+map = new GMaps({  // muestra mapa centrado en coords [lat, lng]
+el: '#map',
+lat: lt,
+lng: ln,
+//setZoom: 8,
+click: enlazarMarcador,
+tap: enlazarMarcador
+});
+if (ruta.length > 0) {
+map.addMarker({ lat: ruta[0][0], lng: ruta[0][1]});  // marcador en [lat, lng]
+}
+if (ruta.length > 1) {
+for (i=1; i<ruta.length; i++) { muestra(ruta[i-1], ruta[i]); }
+}
+map.fitZoom();*/
+},
+error: function(error) { smoke.alert('Error en la Geolocalización: '+error.message); },
+not_supported: function(){ smoke.alert("Su navegador no soporta geolocalización"); },
+});
+}
+
+        
     </script>
   </head>
   <body class="sidebar-mini skin-blue-light">
@@ -88,5 +128,6 @@ function(position){
         <div id='content_master'></div>
         <br/>
         <button type="button" onclick="testGPS()">test</button>
+         <button type="button" onclick="testGPS2()">test2</button>
   </body>
 </html>
