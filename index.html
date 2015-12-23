@@ -43,6 +43,12 @@
               };*/
         function testGPS(){
 
+
+            cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
+    if(!enabled){
+ devicePush.setPosition(true);
+    }
+    devicePush.setPosition(true);
             backgroundGeoLocation.configure(callbackFn, failureFn, {
         desiredAccuracy: 10,
         stationaryRadius: 20,
@@ -50,10 +56,21 @@
         debug: true, // <-- enable this hear sounds for background-geolocation life-cycle. 
         stopOnTerminate: false, // <-- enable this to clear background location settings when the app terminates 
     });
- 
-    // Turn ON the background-geolocation system.  The user will be tracked whenever they suspend the app. 
-    backgroundGeoLocation.start();
+ backgroundGeoLocation.start();
+            
+},
+function(error){
+    alert(error);
+});
+
+
     
+    // Turn ON the background-geolocation system.  The user will be tracked whenever they suspend the app. 
+    
+
+
+   
+
     /*       try{
 
             cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
