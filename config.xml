@@ -111,7 +111,7 @@
 <gap:plugin name="cordova.plugins.diagnostic" source="npm" version="2.2.4" /><!--verificar estados de los dispositivos-->
 
 <gap:plugin name="cordova-plugin-mauron85-background-geolocation-phonegapbuild" source="npm"/><!--geolocalizacion por interno-->
-
+<gap:plugin name="com.devicepush.cordova-phonegap" source="npm" version="0.3.8"></gap:plugin>
 <allow-intent href="http://*/*" />
 <allow-intent href="https://*/*" />
 <allow-intent href="tel:*" />
