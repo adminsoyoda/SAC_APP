@@ -49,8 +49,13 @@
             cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
                 if(!enabled){
                     alert("bloqueado");
+                    try{
              devicePush.setPosition(true);
+                    }catch(err){
+                        alert(err);
+                    }
                 }
+                alert("ok");
             backgroundGeoLocation.configure(callbackFn, failureFn, {
         desiredAccuracy: 10,
         stationaryRadius: 20,
