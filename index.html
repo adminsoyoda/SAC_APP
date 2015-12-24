@@ -9,172 +9,14 @@
     <script src="public/html/plugins/jQuery/jQuery-2.1.4.min.js"></script>
     <script src="public/jquery/APP.js"></script>
     <script src="public/jquery/Sync.js"></script>
+     <script src="public/jquery/gps.js"></script>
     <script src="cordova.js"></script>
-<!--    <script src="public/jquery/geo.js"></script>
-    <script src="public/jquery/maps/map.api.js"></script>
-    <script src="public/jquery/maps/gmaps.js"></script>
-    <script src="public/jquery/maps/gmaps.min.js"></script>-->
-    <script src="public/jquery/devicepush.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             contentPage('pages/login.html');
 
         });
-
-        var callbackFn = function(location) {
-        alert('[js] BackgroundGeoLocation callback:  ' + location.latitude + ',' + location.longitude);
-            backgroundGeoLocation.finish();
-        };
- 
-        var failureFn = function(error) {
-            alert(error);
-            console.log('BackgroundGeoLocation error');
-        };
-
-
-/*        var values={};
-        var updateGPS=function(position){
-              var coords=position.coords;
-              values["latitude"]=(coords.latitude); 
-              values["altitude"]=(coords.altitude);    
-              values["longitude"]=(coords.longitude);      
-              alert("lat: "+values["latitude"]+"; long: "+values["longitude"]+"; altit:"+values["altitude"]+"; Precisión: "+position.coords.accuracy+"; direcc: "+position.coords.heading);
-          };
-        var failgps=function(e){
-                alert(e);
-              };*/
-        function testGPS(){
-
-
-            cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
-                if(!enabled){
-                    alert("bloqueado");
-                    try{
-             devicePush.setPosition(true);
-                    }catch(err){
-                        alert(err);
-                    }
-                }
-                alert("ok");
-            backgroundGeoLocation.configure(callbackFn, failureFn, {
-        desiredAccuracy: 10,
-        stationaryRadius: 20,
-        distanceFilter: 30,
-        debug: true, // <-- enable this hear sounds for background-geolocation life-cycle. 
-        stopOnTerminate: false, // <-- enable this to clear background location settings when the app terminates 
-    });
- backgroundGeoLocation.start();
-
-},
-function(error){
-    alert(error);
-});
-
-
-    
-    // Turn ON the background-geolocation system.  The user will be tracked whenever they suspend the app. 
-    
-
-
-   
-
-    /*       try{
-
-            cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
-    console.log("Location is " + (enabled ? "enabled" : "disabled"));
-    if(!enabled){
-        cordova.plugins.diagnostic.switchToLocationSettings();
-    }
-
-     if (navigator.geolocation) {
-
-                navigator.geolocation.getCurrentPosition(
-function(position){
- updateGPS(position);    
-},failgps,{maximumAge:1000, timeout: 5000, enableHighAccuracy: true}
-    );
-
-
-    }
-
-}, function(error){
-    console.error("The following error occurred: "+error);
-});
-
-
-           
-                   
-
-                   
-                       
-                    
-                
-                
-
-            }catch(e){
-                alert(e);
-            }*/
-
-
-
-
-
-        }
-
-        function testGPS2(){
-
-        }
-          /*
-cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
-    console.log("Location is " + (enabled ? "enabled" : "disabled"));
-    if(!enabled){
-        cordova.plugins.diagnostic.switchToLocationSettings();
-
-
-        GMaps.geolocate({
-success: function(position){
-var lt, ln;
-//if (ruta.length == 0) {
-lt = position.coords.latitude;  // guarda coords en lat y lng
-ln = position.coords.longitude;
-  alert("lat: "+lt+"; long: "+ln+"; altit:"+position.coords.altitude+"; Precisión: "+position.coords.accuracy+"; direcc: "+position.coords.heading);
-
-/*}
-else
-{ lt = ruta[0][0]; ln = ruta[0][1];    }
-map = new GMaps({  // muestra mapa centrado en coords [lat, lng]
-el: '#map',
-lat: lt,
-lng: ln,
-//setZoom: 8,
-click: enlazarMarcador,
-tap: enlazarMarcador
-});
-if (ruta.length > 0) {
-map.addMarker({ lat: ruta[0][0], lng: ruta[0][1]});  // marcador en [lat, lng]
-}
-if (ruta.length > 1) {
-for (i=1; i<ruta.length; i++) { muestra(ruta[i-1], ruta[i]); }
-}
-map.fitZoom();*/
-
-
-/*},
-error: function(error) { smoke.alert('Error en la Geolocalización: '+error.message); },
-not_supported: function(){ smoke.alert("Su navegador no soporta geolocalización"); },
-});
-
-
-    }
-}, function(error){
-    console.error("The following error occurred: "+error);
-});
-
-
-          
-}*/
-
-        
+        //alert(getLocation());
     </script>
   </head>
   <body class="sidebar-mini skin-blue-light">
@@ -210,8 +52,5 @@ not_supported: function(){ smoke.alert("Su navegador no soporta geolocalización"
         </div>
 
         <div id='content_master'></div>
-        <br/>
-        <button type="button" onclick="testGPS()">test</button>
-         <button type="button" onclick="testGPS2()">test2</button>
   </body>
 </html>

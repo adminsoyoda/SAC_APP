@@ -288,4 +288,38 @@ function fecActual() {
     return datetime;
 }
 
+//---------------------------------------------------------------------------------------------------------------------------
+//Creando Eventos
+//---------------------------------------------------------------------------------------------------------------------------
+function newEvent(y,m,d,h,m,optiontile,optioncolor){
+    var events = {start: new Date(y, m, d, h, m), title : optiontile ,backgroundColor: optioncolor};
+	$('#calendar').fullCalendar( 'addEvent', events )
+	$('#calendar').fullCalendar('renderEvent', events, true);		
+}
 
+//---------------------------------------------------------------------------------------------------------------------------
+//Inicializa FullCalendar
+//---------------------------------------------------------------------------------------------------------------------------
+function iniCalendar() {             
+  $('#calendar').fullCalendar({
+    header: {left: 'prev,next today',center: '',right: 'title'},
+    buttonText: {today: 'today',month: 'month',week: 'week'},
+	defaultView: 'agendaWeek',
+	eventClick: function (calEvent, jsEvent, view) {
+		 $("#dialog").dialog({autoOpen: false, width: 130,});
+         $("#idClie").val(calEvent.id);
+         $('#dialog').dialog('open');
+	},
+    events: [
+            {
+              title: 'All Day Event',
+              start: new Date(2015,11, 22),
+              backgroundColor: "#f56954", 
+              borderColor: "#f56954" 
+            }
+            ],
+    editable: true,
+    droppable: false,
+	timezone: 'UTC'
+});		
+}

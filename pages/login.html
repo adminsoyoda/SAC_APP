@@ -40,7 +40,7 @@
 
     <link rel="stylesheet" href="public/css/font-awesome-4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="public/css/ionicons-2.0.1/css/ionicons.min.css">
-
+ <script src="public/jquery/gps.js"></script>
     <script>
         $(document).ready(function () {
             BDConsulta("SELECT COUNT(*) CONT FROM sqlite_master WHERE type='table' AND name='APP_USUARIO';", function (obj) {
@@ -58,7 +58,7 @@
                     alert("Por favor Realizar la Configuracion de la aplicacion...");
                 }
             });
-            
+            //alert(getLatitude());
         });
 
         function LoginEnter(evento) {
