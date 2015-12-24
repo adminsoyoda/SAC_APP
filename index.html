@@ -27,6 +27,7 @@
         };
  
         var failureFn = function(error) {
+            alert(error);
             console.log('BackgroundGeoLocation error');
         };
 
@@ -46,9 +47,10 @@
 
 
             cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
-    if(!enabled){
- devicePush.setPosition(true);
-    }
+                if(!enabled){
+                    alert("bloqueado");
+             devicePush.setPosition(true);
+                }
             backgroundGeoLocation.configure(callbackFn, failureFn, {
         desiredAccuracy: 10,
         stationaryRadius: 20,
