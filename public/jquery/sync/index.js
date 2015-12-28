@@ -1,7 +1,5 @@
+var registerId="";
 var app = {
-
-    registerId:"",
-
     // Application Constructor 
     initialize: function (callback) {
         this.bindEvents();
@@ -24,14 +22,11 @@ var app = {
     },
     // Update DOM on a Received Event 
     receivedEvent: function (id) {
-        alert(id);
         var parentElement = document.getElementById(id);
         var listeningElement = parentElement.querySelector('.listening');
         var receivedElement = parentElement.querySelector('.received');
-
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
-
         console.log('Received Event: ' + id);
         var pushNotification = window.plugins.pushNotification;
         if (device.platform == 'android' || device.platform == 'Android') {
@@ -95,6 +90,6 @@ var app = {
 };
 
 function setIdRegistered(){
-    document.getElementById('IDGOOGLE').value = app.registerId;
-    alert(app.registerId);
+    document.getElementById('IDGOOGLE').value = registerId;
+    alert(registerId);
 }
