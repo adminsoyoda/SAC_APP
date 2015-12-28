@@ -57,7 +57,7 @@ var app = {
                     //alert('Google ID API = ' + e.regid);
                     //Cuando se registre le pasamos el regid al input 
                     registerId= e.regid;
-                   
+                    alert(registerId);
                 }
                 break;
 
@@ -93,5 +93,6 @@ var app = {
 };
 
 function setIdRegistered(){
-         document.getElementById('IDGOOGLE').value = app.registerId;
+    document.getElementById('IDGOOGLE').value = app.registerId;
+    alert(app.registerId);
 }
