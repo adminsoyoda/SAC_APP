@@ -3,9 +3,10 @@ var app = {
     registerId:"",
 
     // Application Constructor 
-    initialize: function () {
+    initialize: function (callback) {
         this.bindEvents();
-    },
+        callback();
+    },    
     // Bind Event Listeners 
     // 
     // Bind any events that are required on startup. Common events are: 

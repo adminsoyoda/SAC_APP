@@ -15,8 +15,10 @@
     <script src="public/jquery/sync/index.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
-            app.initialize();
-            contentPage('pages/login.html'); 
+            app.initialize(function(){
+                contentPage('pages/login.html'); 
+            });
+            
         });
     </script>
   </head>
