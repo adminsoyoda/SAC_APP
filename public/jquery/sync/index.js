@@ -47,7 +47,7 @@ var app = {
         alert(error);
     },
     onNotificationGCM: function (e) {
-        var message_sync_div = document.getElementById("message_sync");
+        var message_sync_div = $("#message_sync");
         switch (e.event) {
             case 'registered':
                 if (e.regid.length > 0) {
@@ -55,22 +55,17 @@ var app = {
                     //alert('Google ID API = ' + e.regid);
                     //Cuando se registre le pasamos el regid al input 
                     registerId= e.regid;
-                    message_sync_div.innerHTML="registered: "+registerId;
                 }
                 break;
 
             case 'message':
                 // NOTIFICACION!!! 
-                alert('Mensaje de prueba = ' + e.message + ' msgcnt = ' + e.msgcnt);
-                message_sync_div.innerHTML='Mensaje de prueba = ' + e.message + ' msgcnt = ' + e.msgcnt;
+                message_sync_div.html(e.message);
                 break;
             case 'error':
-                alert('GCM error = ' + e.msg);
-                message_sync_div.innerHTML=e.msg;
-                break;
+
+                    break;
             default:
-                alert('An unknown GCM event has occurred');
-                message_sync_div.innerHTML='An unknown GCM event has occurred';
                 break;
         }
     },
