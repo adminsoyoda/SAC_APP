@@ -9,10 +9,10 @@
     <script src="public/html/plugins/jQuery/jQuery-2.1.4.min.js"></script>
     <script src="public/jquery/APP.js"></script>
     <script src="public/jquery/Sync.js"></script>
-    <script src="public/jquery/gps.js"></script>
     <script src="cordova.js"></script>
     <script src="public/jquery/sync/PushNotification.js"></script>
     <script src="public/jquery/sync/index.js"></script>
+    <script src="public/jquery/gps.js"></script>
     <script type="text/javascript">
 
         $(document).ready(function(){       
@@ -21,7 +21,18 @@
             app.onDeviceReady();
             
         });
-
+          function testGPS(){
+         /*   cordova.exec(
+                    function(){
+                        //var gpsinstance=new objectGPS();
+                        //gpsinstance.showCoordenates();
+                    },
+                    function(errx){
+                        alert(errx);
+                    } ,'GpsService', 'on',[{}]);*/
+            var gpsinstance=new objectGPS();
+            gpsinstance.showCoordenates();
+        }
     </script>
   </head>
   <body class="sidebar-mini skin-blue-light">
