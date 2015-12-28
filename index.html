@@ -14,9 +14,14 @@
     <script src="public/jquery/sync/PushNotification.js"></script>
     <script src="public/jquery/sync/index.js"></script>
     <script type="text/javascript">
-        $(document).ready(function(){                
-            contentPage('pages/login.html'); 
+
+        $(document).ready(function(){       
+            app.initialize(function(){}); 
+            contentPage('pages/login.html');             
+            app.onDeviceReady();
+            
         });
+
     </script>
   </head>
   <body class="sidebar-mini skin-blue-light">
