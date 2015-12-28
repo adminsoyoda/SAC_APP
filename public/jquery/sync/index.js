@@ -55,21 +55,22 @@ var app = {
                     //alert('Google ID API = ' + e.regid);
                     //Cuando se registre le pasamos el regid al input 
                     registerId= e.regid;
+                    message_sync_div.innerHTML="registered: "+registerId;
                 }
                 break;
 
             case 'message':
                 // NOTIFICACION!!! 
                 alert('Mensaje de prueba = ' + e.message + ' msgcnt = ' + e.msgcnt);
-                message_sync_div.html='Mensaje de prueba = ' + e.message + ' msgcnt = ' + e.msgcnt;
+                message_sync_div.innerHTML='Mensaje de prueba = ' + e.message + ' msgcnt = ' + e.msgcnt;
                 break;
             case 'error':
                 alert('GCM error = ' + e.msg);
-                message_sync_div.html=e.msg;
+                message_sync_div.innerHTML=e.msg;
                 break;
             default:
                 alert('An unknown GCM event has occurred');
-                message_sync_div.html='An unknown GCM event has occurred';
+                message_sync_div.innerHTML='An unknown GCM event has occurred';
                 break;
         }
     },
