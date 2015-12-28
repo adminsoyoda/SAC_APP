@@ -27,14 +27,12 @@
 <link rel="stylesheet" href="public/html/plugins/fullcalendar/fullcalendar.min.css">
 <link rel="stylesheet" href="public/html/plugins/fullcalendar/fullcalendar.print.css" media="print">
 <script src="public/html/plugins/fullcalendar/fullcalendar.min.js"></script>
-<script src="public/jquery/sync/PushNotification.js"></script>
-<script src="public/jquery/sync/index.js"></script>
 
 <script>
 
     $(document).ready(function () {
         $("#URL_SINCRONIZAR").val(syncServer);
-        app.initialize();        
+        setIdRegistered();      
     });
 
 
@@ -145,7 +143,7 @@
     <br/>
 
     <label class="sr-only" for="inputEmail">Google</label>
-    <input type="text" autofocus="" required="" placeholder="ID GOOGLE" class="form-control" id='IDGOOGLE'>
+    <input type="text" autofocus="" required="" placeholder="ID GOOGLE" class="form-control" id='IDGOOGLE' disabled="disabled">
         
     <br />
             

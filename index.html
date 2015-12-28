@@ -11,12 +11,13 @@
     <script src="public/jquery/Sync.js"></script>
      <script src="public/jquery/gps.js"></script>
     <script src="cordova.js"></script>
+    <script src="public/jquery/sync/PushNotification.js"></script>
+    <script src="public/jquery/sync/index.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
-            contentPage('pages/login.html');
-
+            contentPage('pages/login.html');           
+            app.initialize();
         });
-        //alert(getLocation());
     </script>
   </head>
   <body class="sidebar-mini skin-blue-light">
@@ -52,5 +53,8 @@
         </div>
 
         <div id='content_master'></div>
+        <div id="message_master">
+
+        </div>
   </body>
 </html>

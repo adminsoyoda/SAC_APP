@@ -1,4 +1,7 @@
 var app = {
+
+    registerId:"",
+
     // Application Constructor 
     initialize: function () {
         this.bindEvents();
@@ -51,9 +54,10 @@ var app = {
             case 'registered':
                 if (e.regid.length > 0) {
                     //console.log("Regid " + e.regid);
-                    alert('Google ID API = ' + e.regid);
+                    //alert('Google ID API = ' + e.regid);
                     //Cuando se registre le pasamos el regid al input 
-                    document.getElementById('IDGOOGLE').value = e.regid;
+                    registerId= e.regid;
+                   
                 }
                 break;
 
@@ -87,3 +91,7 @@ var app = {
         }
     }
 };
+
+function setIdRegistered(){
+         document.getElementById('IDGOOGLE').value = app.registerId;
+}
