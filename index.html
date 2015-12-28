@@ -15,7 +15,8 @@
     <script src="public/jquery/sync/index.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
-            app.initialize(function(){
+            app.initialize(function(){                
+                app.onDeviceReady();
                 contentPage('pages/login.html'); 
             });
             
