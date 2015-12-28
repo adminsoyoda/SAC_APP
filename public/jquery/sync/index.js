@@ -1,4 +1,4 @@
-var registerId="";
+var registerId="";//variable contenedora de id
 var app = {
     // Application Constructor 
     initialize: function (callback) {
@@ -47,6 +47,7 @@ var app = {
         alert(error);
     },
     onNotificationGCM: function (e) {
+        var message_sync_div = document.getElementById("message_sync");
         switch (e.event) {
             case 'registered':
                 if (e.regid.length > 0) {
@@ -54,28 +55,27 @@ var app = {
                     //alert('Google ID API = ' + e.regid);
                     //Cuando se registre le pasamos el regid al input 
                     registerId= e.regid;
-                    alert(registerId);
                 }
                 break;
 
             case 'message':
                 // NOTIFICACION!!! 
                 alert('Mensaje de prueba = ' + e.message + ' msgcnt = ' + e.msgcnt);
+                message_sync_div.html='Mensaje de prueba = ' + e.message + ' msgcnt = ' + e.msgcnt;
                 break;
-
             case 'error':
                 alert('GCM error = ' + e.msg);
+                message_sync_div.html=e.msg;
                 break;
-
             default:
                 alert('An unknown GCM event has occurred');
+                message_sync_div.html='An unknown GCM event has occurred';
                 break;
         }
     },
     onNotificationAPN: function (event) {
         var pushNotification = window.plugins.pushNotification;
         alert("Running in JS - onNotificationAPN - Received a notification! " + event.alert);
-
         if (event.alert) {
             navigator.notification.alert(event.alert);
         }
@@ -89,7 +89,6 @@ var app = {
     }
 };
 
-function setIdRegistered(){
+function setIdRegistered(){//asiginar id de google
     document.getElementById('IDGOOGLE').value = registerId;
-    alert(registerId);
 }
