@@ -93,6 +93,8 @@ var app = {
     }
 };
 
+app.initialize(function(){});
+
 function setIdRegistered(){
     document.getElementById('IDGOOGLE').value = app.registerId;
     alert(app.registerId);
