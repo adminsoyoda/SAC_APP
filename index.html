@@ -33,10 +33,16 @@
 
             cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
                 if (!enabled){
-                    cordova.plugins.settings.openSetting("locale", function(){},function(){
+                    alert("bien detecatado");
+                    try{
+                        cordova.plugins.settings.openSetting("locale", function(){},function(){
                         alert("Error al abrir las configuraciones");
-                    });                    
+                        });
+                    }catch(errxx){
+                        alert(errxx);
+                    }
                 }  
+                alert("paso");
                 var gpsinstance=new objectGPS();
                 gpsinstance.showCoordenates();            
             }, function(error){
