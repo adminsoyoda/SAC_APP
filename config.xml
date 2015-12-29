@@ -62,7 +62,7 @@
 <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" /> 
 <gap:plugin name="cordova.plugins.diagnostic" source="npm" version="2.2.4" /><!--verificar estados de los dispositivos-->
 
-<gap:plugin name="com.phonegap.plugins.nativesettingsopener" source="npm" version="1.0.1" /><!--verificar estados de los dispositivos-->
+<gap:plugin name="com.phonegap.plugins.nativesettingsopener"/><!--verificar estados de los dispositivos-->
 
 
 <!-- Third party plugins -->
