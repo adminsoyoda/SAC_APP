@@ -21,24 +21,13 @@
             app.onDeviceReady();
             
         });
-          function testGPS(){
-            var value=false;
-            cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
-                if (!enabled){
-                    cordova.exec(
-                    function(){
-                            alert("ok");
-                    },
-                    function(errx){
-                        alert(errx);
-                    } ,'GpsService', 'on',[{}]);                    
-                } 
-                var gpsinstance=new objectGPS();
-                gpsinstance.showCoordenates();            
-            }, function(error){
-
-            });
-           
+        function getCoordenatesGPS(){
+            var objGps=new objectGPS();
+            objGps.continueGps(function(){
+                objGps.showCoordenates();
+            },function(){
+                
+            });               
         }
     </script>
   </head>
@@ -76,7 +65,7 @@
 
         <div id='content_master'></div>
         <br/>
-         <button type="button" onclick="testGPS()">test</button>
+         <button type="button" onclick="getCoordenatesGPS()">Obtener coordenadas</button>
          <br/>
         <div class="app" style='display:none'> 
         <div id="message_sync">...</div>

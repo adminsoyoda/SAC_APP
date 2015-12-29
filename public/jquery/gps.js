@@ -46,3 +46,52 @@
 
         },true);
     }
+
+
+    objectGPS.prototype.isGpsActive=function(){
+        var value=false;
+        cordova.plugins.diagnostic.isLocationEnabled(
+            function(enabled){
+                value=enabled;            
+            }, 
+            function(error){
+                value=false;
+            }); 
+        return value;
+    }
+     
+    objectGPS.prototype.continueGps=function(callbackIfTrue,callbackIfFalse){
+        var pass=false;
+        var errorPass=false;
+        while (!pass) {
+            cordova.plugins.diagnostic.isLocationEnabled(
+                function(enabled){
+                pass=enabled;
+                if (!enabled){
+                    alert("Active el GPS.Para continuar");
+                    cordova.exec(
+                    function(){
+
+                    },
+                    function(errx){
+                    alert(errx);
+                    } ,'GpsService', 'on',[{}]);    
+                    pass=true;
+                } 
+                
+            }, function(error){
+                alert(error);
+                pass=true;
+                errorPass=true;
+            });
+        }
+        if (errorPass){
+            return false;
+        }
+        if (pass){
+            callbackIfTrue();
+        }else{
+            callbackIfFalse();
+        }
+        return true;
+    }
