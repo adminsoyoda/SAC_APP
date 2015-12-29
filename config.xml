@@ -60,10 +60,6 @@
 <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" /> 
 <gap:plugin name="cordova.plugins.diagnostic" source="npm" version="2.2.4" /><!--verificar estados de los dispositivos-->
 
-<gap:plugin name="com.phonegap.plugins.nativesettingsopener"/><!--verificar estados de los dispositivos-->
-
-
-
 
 <feature name="NativeSettings"> <param name="android-package" value="com.phonegap.plugins.nativesettingsopener" /> </feature>
 
