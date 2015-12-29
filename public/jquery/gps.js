@@ -62,35 +62,24 @@
      
     objectGPS.prototype.continueGps=function(callbackIfTrue,callbackIfFalse){
         var pass=false;
-        var errorPass=false;
-        alert(1);
-        while (!pass) {
-            alert(2);
-            cordova.plugins.diagnostic.isLocationEnabled(
-                function(enabled){
-                    alert(enabled);
-                    pass=enabled;
-                    if (!enabled){
-                        alert("Active el GPS.Para continuar");
-                        cordova.exec(
+        cordova.plugins.diagnostic.isLocationEnabled(
+            function(enabled){
+                pass=enabled;
+                if (!enabled){
+                    alert("Active el GPS.Para continuar");
+                    cordova.exec(
                         function(){
 
                         },
                         function(errx){
-                        alert(errx);
+                            alert(errx);
                         } ,'GpsService', 'on',[{}]);    
-                        pass=true;
-                    } 
-                },
-                function(error){
-                    alert(error);
-                    pass=true;
-                    errorPass=true;
-                });
-        }
-        if (errorPass){
-            return false;
-        }
+                } 
+            },
+            function(error){
+                alert(error);
+                pass=false;
+            });
         if (pass){
             callbackIfTrue();
         }else{
