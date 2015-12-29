@@ -22,13 +22,12 @@
             
         });
           function testGPS(){
-            
-
+            var value=false;
             cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
                 if (!enabled){
                     cordova.exec(
                     function(){
-                        alert("ok");
+                            alert("ok");
                     },
                     function(errx){
                         alert(errx);
