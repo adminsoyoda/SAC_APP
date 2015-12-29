@@ -8,6 +8,7 @@
         var show=showAlert|| false;
         var self=this;
         var coordenates={};
+        var watchID = null;
         navigator.geolocation.getCurrentPosition(
                 function(position) {
                     coordenates={'latitude':position.coords.latitude,
@@ -36,7 +37,8 @@
                           'message: ' + error.message + '\n');
                     }
                     callbackError(error);
-                });
+                },{enableHighAccuracy:true});
+        
         }
     
     objectGPS.prototype.showCoordenates=function(){
@@ -85,5 +87,5 @@
                 alert(error);
                 pass=false;
             });
-        return true;
+        return pass;
     }
