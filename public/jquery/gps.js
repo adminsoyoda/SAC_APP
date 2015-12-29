@@ -80,22 +80,10 @@ var TIMEOUT_SEARCH=15000;//milisegundos
             function(enabled){
                 pass=enabled;
                 if (!enabled){
-                    alert("Active el GPS.Para continuar");
-                    cordova.exec(
-                        function(){
-
-                        },
-                        function(errx){
-                            alert(errx);
-                        } ,'GpsService', 'on',[{}]);    
+                    alert("Active el GPS.Para continuar.");
+                    cordova.exec(function(){},function(errx){alert(errx);} ,'GpsService', 'on',[{}]);    
                 }
-                cordova.exec(
-                        function(value){
-alert(value);
-                        },
-                        function(errx){
-                            alert(errx);
-                        } ,'GpsService', 'provider_enabled',[{}]);    
+                cordova.exec(function(value){alert(value);},function(errx){alert(errx);} ,'GpsService', 'provider_enabled',[{}]);    
                 if (pass){
                     callbackIfTrue();
                 }else{
