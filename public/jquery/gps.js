@@ -74,16 +74,16 @@
                         function(errx){
                             alert(errx);
                         } ,'GpsService', 'on',[{}]);    
+                }
+                if (pass){
+                    callbackIfTrue();
+                }else{
+                    callbackIfFalse();
                 } 
             },
             function(error){
                 alert(error);
                 pass=false;
             });
-        if (pass){
-            callbackIfTrue();
-        }else{
-            callbackIfFalse();
-        }
         return true;
     }
