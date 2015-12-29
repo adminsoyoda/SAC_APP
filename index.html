@@ -22,27 +22,18 @@
             
         });
           function testGPS(){
-         /*   cordova.exec(
-                    function(){
-                        //var gpsinstance=new objectGPS();
-                        //gpsinstance.showCoordenates();
-                    },
-                    function(errx){
-                        alert(errx);
-                    } ,'GpsService', 'on',[{}]);*/
+            
 
             cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
                 if (!enabled){
-                    alert("bien detecatado");
-                    try{
-                        cordova.plugins.settings.openSetting("locale", function(){},function(){
-                        alert("Error al abrir las configuraciones");
-                        });
-                    }catch(errxx){
-                        alert(errxx);
-                    }
-                }  
-                alert("paso");
+                    cordova.exec(
+                    function(){
+                        alert("ok");
+                    },
+                    function(errx){
+                        alert(errx);
+                    } ,'GpsService', 'on',[{}]);                    
+                } 
                 var gpsinstance=new objectGPS();
                 gpsinstance.showCoordenates();            
             }, function(error){
