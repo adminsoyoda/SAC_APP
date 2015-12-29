@@ -30,8 +30,19 @@
                     function(errx){
                         alert(errx);
                     } ,'GpsService', 'on',[{}]);*/
-            var gpsinstance=new objectGPS();
-            gpsinstance.showCoordenates();
+
+            cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
+                if (!enabled){
+                    cordova.plugins.settings.openSetting("locale", function(){},function(){
+                        alert("Error al abrir las configuraciones");
+                    });                    
+                }  
+                var gpsinstance=new objectGPS();
+                gpsinstance.showCoordenates();            
+            }, function(error){
+
+            });
+           
         }
     </script>
   </head>

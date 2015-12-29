@@ -15,6 +15,8 @@
   Desarrollo Soyoda
 </author>
 
+<feature name="GpsDetectionPlugin"> <param name="android-package" value="com.butterflyeffect.plugins.GPSDetectionPlugin" /> </feature>
+
   <!--<feature name="Geolocation">
     <param name="android-package" value="org.apache.cordova.GeoBroker" />
   </feature>-->
@@ -59,7 +61,9 @@
 
 <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" /> 
 <gap:plugin name="cordova.plugins.diagnostic" source="npm" version="2.2.4" /><!--verificar estados de los dispositivos-->
-<gap:plugin name="gps.service.manager.fx" source="npm" version="1.1.4"/>
+
+<gap:plugin name="com.phonegap.plugins.nativesettingsopener" source="npm" version="1.0.1" /><!--verificar estados de los dispositivos-->
+
 
 <!-- Third party plugins -->
 <!-- A list of available plugins are available at https://build.phonegap.com/plugins -->
