@@ -32,15 +32,15 @@ var TIMEOUT_SEARCH=15000;//milisegundos
     objectGPS.prototype.getCoordenates=function(callbackWithValues,callbackError,showAlert){
         var show=showAlert|| false;
         var self=this;
+        var exitError=function(error){
+                        if(show){
+                            alert('code: '    + error.code    + '\n' +'message: ' + error.message + '\n');
+                        }
+                        callbackError(error);
+                    };
         this.__getCoordenates(self,show,callbackWithValues,
                 function(error) {
-                    self.__getCoordenates(self,show,callbackWithValues,
-                        function(error){
-                            if(show){
-                                alert('code: '    + error.code    + '\n' +'message: ' + error.message + '\n');
-                            }
-                            callbackError(error);
-                        },{},true);
+                    self.__getCoordenates(self,show,callbackWithValues,exitError,{},true);
                 },{enableHighAccuracy:true,timeout:TIMEOUT_SEARCH},false);
     }
     
@@ -89,6 +89,13 @@ var TIMEOUT_SEARCH=15000;//milisegundos
                             alert(errx);
                         } ,'GpsService', 'on',[{}]);    
                 }
+                cordova.exec(
+                        function(value){
+alert(value);
+                        },
+                        function(errx){
+                            alert(errx);
+                        } ,'GpsService', 'provider_enabled',[{}]);    
                 if (pass){
                     callbackIfTrue();
                 }else{
