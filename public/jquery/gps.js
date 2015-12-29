@@ -1,46 +1,58 @@
-
+var TIMEOUT_SEARCH=15000;//milisegundos
 
     function objectGPS(){
 
     }
 
-    objectGPS.prototype.getCoordenates=function(callbackWithValues,callbackError,showAlert){
-        var show=showAlert|| false;
-        var self=this;
-        var coordenates={};
-        var watchID = null;
-        navigator.geolocation.getCurrentPosition(
-                function(position) {
-                    coordenates={'latitude':position.coords.latitude,
+    objectGPS.prototype.getValuesFromPosition= function(show,flag,position){
+        var coordenates={'latitude':position.coords.latitude,
                     'longitude':position.coords.longitude,
                     'latitude':position.coords.latitude,
                     'accuracy':position.coords.accuracy,
                     'altitudeAccuracy':position.coords.altitudeAccuracy,
                     'heading':position.coords.heading,
                     'speed':position.coords.speed,
-                    'timestamp':position.coords.timestamp};
-                    if(show){
-                        alert('Latitude: '          + position.coords.latitude          + '\n' +
+                    'timestamp':position.coords.timestamp,
+                    'flag':flag
+                };
+        if(show){
+            alert('Latitude: '          + position.coords.latitude          + '\n' +
                           'Longitude: '         + position.coords.longitude         + '\n' +
                           'Altitude: '          + position.coords.altitude          + '\n' +
                           'Accuracy: '          + position.coords.accuracy          + '\n' +
                           'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
                           'Heading: '           + position.coords.heading           + '\n' +
                           'Speed: '             + position.coords.speed             + '\n' +
-                          'Timestamp: '         + position.timestamp                + '\n');
-                    }
-                    callbackWithValues(coordenates);
-                },
+                          'Timestamp: '         + position.timestamp                + '\n'+
+                          'Flag: '         + flag                + '\n');
+            }
+        return coordenates;
+    }
+
+    objectGPS.prototype.getCoordenates=function(callbackWithValues,callbackError,showAlert){
+        var show=showAlert|| false;
+        var self=this;
+        this.__getCoordenates(self,show,callbackWithValues,
                 function(error) {
-                    if(show){
-                        alert('code: '    + error.code    + '\n' +
-                          'message: ' + error.message + '\n');
-                    }
-                    callbackError(error);
-                },{enableHighAccuracy:true});
-        
-        }
+                    self.__getCoordenates(self,show,callbackWithValues,
+                        function(error){
+                            if(show){
+                                alert('code: '    + error.code    + '\n' +'message: ' + error.message + '\n');
+                            }
+                            callbackError(error);
+                        },{},true);
+                },{enableHighAccuracy:true,timeout:TIMEOUT_SEARCH},false);
+    }
     
+    objectGPS.prototype.__getCoordenates=function(self,show,callbackWithValues,callbackError,options,flag){
+        var coordenates={};
+        navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    coordenates=self.getValuesFromPosition(show,flag,position);
+                    callbackWithValues(coordenates);
+                },callbackError,options);
+        }
+
     objectGPS.prototype.showCoordenates=function(){
         this.getCoordenates(function(coordenates){
 
