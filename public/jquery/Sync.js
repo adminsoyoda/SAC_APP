@@ -36,6 +36,17 @@ function BDConsultaOBJ(sqlCommand, RESULTADO) {
     }, errorCB, successCB);
 }
 
+function BDActualizacionObj(sqlCommand,Obj) {
+    var db = window.openDatabase("SAC", "1.0", "SAC Gestion Ventas Soyoda", 200000);
+    db.transaction(function(tx){
+        for (objValue in Obj){
+            tx.executeSql(sqlCommand,Obj[objValue]);
+        }
+    }, errorCB, successCB);    
+}
+
+
+
 function SyncExeReady(CODIGOINTERNO,TIPOSYNC, RETORNO) {
     $("#loader_sys").show();
     var dataPost = {
