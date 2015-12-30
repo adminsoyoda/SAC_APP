@@ -79,20 +79,19 @@ var TIMEOUT_SEARCH=15000;//milisegundos
         cordova.plugins.diagnostic.isLocationEnabled(
             function(enabled){
                 pass=enabled;
-                alert(pass);
                 if (!enabled){
                     alert("Active el GPS.Para continuar.");
                     cordova.exec(function(){},function(errx){alert(errx);} ,'GpsService', 'on',[{}]);    
                 }
-                cordova.exec(function(providerEnabled){
+                if(pass){
+                    cordova.exec(function(providerEnabled){
                     pass=providerEnabled["value"];
-                    alert(pass);
                     if (!pass){
                         alert("Configure el método de  localización como 'SOLO GPS'.");
                         cordova.exec(function(){},function(errx){alert(errx);} ,'GpsService', 'on',[{}]);    
                     }
-
-                },function(errx){alert(errx);} ,'GpsService', 'provider_enabled',[{}]);       
+                    },function(errx){alert(errx);} ,'GpsService', 'provider_enabled',[{}]);  
+                }                
                 if (pass){
                         callbackIfTrue();
                     }else{
