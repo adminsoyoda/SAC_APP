@@ -59,7 +59,7 @@
 
 <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" /> 
 <gap:plugin name="cordova.plugins.diagnostic" source="npm" version="2.2.4" /><!--verificar estados de los dispositivos-->
-<gap:plugin name="plugin_open_gps" source="npm" version="1.0.8" /><!--verificar estados de los dispositivos-->
+<gap:plugin name="plugin_open_gps" source="npm" version="1.0.9" /><!--verificar estados de los dispositivos-->
 
 
 
