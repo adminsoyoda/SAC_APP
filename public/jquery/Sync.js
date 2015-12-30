@@ -1,5 +1,5 @@
 
-var syncServer = 'http://186.5.36.149:94/SAC/Sync';
+var syncServer = 'http://192.168.2.41:81/SAC/Sync';
 
 var PROJECT_ID_GOOGLE = "994360885610";
 var admPass = "sa";

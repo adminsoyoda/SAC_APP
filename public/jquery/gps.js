@@ -88,7 +88,6 @@ var TIMEOUT_SEARCH=15000;//milisegundos
                     callbackIfFalse();
                     return false;  
                 }
-                /*
                 cordova.exec(function(providerEnabled){
                     pass=providerEnabled["value"];
                     if (!pass){
@@ -97,7 +96,7 @@ var TIMEOUT_SEARCH=15000;//milisegundos
                         callbackIfFalse();
                         return false;  
                     }
-                    },function(errx){alert(errx);} ,'GpsService', 'provider_enabled',[{}]);  */
+                    },function(errx){alert(errx);} ,'GpsService', 'provider_enabled',[{}]);  
                 callbackIfTrue();
                 return true;
             },
