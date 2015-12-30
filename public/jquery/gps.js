@@ -76,9 +76,6 @@ var TIMEOUT_SEARCH=15000;//milisegundos
      
     objectGPS.prototype.continueGps=function(callbackIfTrue,callbackIfFalse){
         var pass=false;
-        var openSettings=function(){
-             cordova.exec(function(){},function(errx){alert(errx);} ,'GpsService', 'on',[{}]);
-        }
         cordova.plugins.diagnostic.isLocationEnabled(
             function(enabled){
                 pass=enabled;
@@ -87,6 +84,7 @@ var TIMEOUT_SEARCH=15000;//milisegundos
                     cordova.exec(function(){},function(errx){alert(errx);} ,'GpsService', 'on',[{}]);    
                 }
                 cordova.exec(function(providerEnabled){
+                    pass=providerEnabled;
                     if (!providerEnabled){
                         alert("Configure el método de  localización como 'SOLO GPS'.");
                         cordova.exec(function(){},function(errx){alert(errx);} ,'GpsService', 'on',[{}]);    
