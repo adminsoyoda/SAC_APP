@@ -84,13 +84,13 @@ var TIMEOUT_SEARCH=15000;//milisegundos
                     cordova.exec(function(){},function(errx){alert(errx);} ,'GpsService', 'on',[{}]);    
                 }
                 cordova.exec(function(p){
-                    alert(p);
-                    if (pass){
+                    alert(p);                    
+                },function(errx){alert(errx);} ,'GpsService', 'provider_enabled',[{}]);       
+                if (pass){
                         callbackIfTrue();
                     }else{
                         callbackIfFalse();
-                    }
-                },function(errx){alert(errx);} ,'GpsService', 'provider_enabled',[{}]);                 
+                    }         
             },
             function(error){
                 alert(error);
