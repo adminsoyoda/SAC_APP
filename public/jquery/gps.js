@@ -76,21 +76,25 @@ var TIMEOUT_SEARCH=15000;//milisegundos
      
     objectGPS.prototype.continueGps=function(callbackIfTrue,callbackIfFalse){
         var pass=false;
+        var openSettings=function(enabled,message){
+            if(!enabled){
+                alert(message);
+                cordova.exec(function(){},function(errx){alert(errx);} ,'GpsService', 'on',[{}]);
+            }
+        };
         cordova.plugins.diagnostic.isLocationEnabled(
             function(enabled){
                 pass=enabled;
-                if (!enabled){
-                    alert("Active el GPS.Para continuar.");
-                    cordova.exec(function(){},function(errx){alert(errx);} ,'GpsService', 'on',[{}]);    
-                }
-                cordova.exec(function(p){
-                    alert(p);                    
+                openSettings(enabled,"Active el GPS.Para continuar.";                
+                cordova.exec(function(providerEnabled){
+                    pass=providerEnabled;
+                    openSettings(providerEnabled,"Configure el método de localización como: SOLO GPS");
                 },function(errx){alert(errx);} ,'GpsService', 'provider_enabled',[{}]);       
                 if (pass){
-                        callbackIfTrue();
-                    }else{
-                        callbackIfFalse();
-                    }         
+                    callbackIfTrue();
+                }else{
+                    callbackIfFalse();
+                }         
             },
             function(error){
                 alert(error);
