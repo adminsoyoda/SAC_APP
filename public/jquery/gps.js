@@ -73,15 +73,17 @@ var TIMEOUT_SEARCH=15000;//milisegundos
             }); 
         return value;
     }
-     
-    objectGPS.prototype.continueGps=function(callbackIfTrue,callbackIfFalse){
-        var pass=false;
-        var openSettings=function(enabled,message){
+
+    function openSettings(enabled,message){
             if(!enabled){
                 alert(message);
                 cordova.exec(function(){},function(errx){alert(errx);} ,'GpsService', 'on',[{}]);
             }
-        };
+        }; 
+
+    objectGPS.prototype.continueGps=function(callbackIfTrue,callbackIfFalse){
+        var pass=false;
+        
         cordova.plugins.diagnostic.isLocationEnabled(
             function(enabled){
                 pass=enabled;
