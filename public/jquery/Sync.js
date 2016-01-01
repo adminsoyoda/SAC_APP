@@ -3,6 +3,10 @@ var syncServer = 'http://192.168.2.41:81/SAC/Sync';
 
 var PROJECT_ID_GOOGLE = "994360885610";
 var admPass = "sa";
+var DATABASE_NAME="SAC_PRUEBA";
+var DATABASE_VERSION="1.0";
+var DATABASE_DESCRIPTION="SAC Gestion Ventas Soyoda";
+var DATABASE_SIZE=200000;
 
 //-------------------------------------------------------------------------------------------------
 //FUNCIONES BASE DE DATOS
@@ -10,7 +14,7 @@ function errorCB(err) { alert("Error processing SQL: " + err.code + " - " + err.
 function successCB() { }
 
 function BDConsulta(sqlCommand, RESULTADO) {
-    var db = window.openDatabase("SAC", "1.0", "SAC Gestion Ventas Soyoda", 200000);
+    var db = window.openDatabase(DATABASE_NAME, DATABASE_VERSION, DATABASE_DESCRIPTION, DATABASE_SIZE);
     db.transaction(function (tx) {
         tx.executeSql(sqlCommand, [], function (tx, rs) {
             var result = [];
@@ -23,12 +27,12 @@ function BDConsulta(sqlCommand, RESULTADO) {
 }
 
 function BDActualizacion(sqlCommand) {
-    var db = window.openDatabase("SAC", "1.0", "SAC Gestion Ventas Soyoda", 200000);
+    var db = window.openDatabase(DATABASE_NAME, DATABASE_VERSION, DATABASE_DESCRIPTION, DATABASE_SIZE);
     db.transaction(function (tx) { tx.executeSql(sqlCommand) }, errorCB, successCB);
 }
 
 function BDConsultaOBJ(sqlCommand, RESULTADO) {
-    var db = window.openDatabase("SAC", "1.0", "SAC Gestion Ventas Soyoda", 200000);
+    var db = window.openDatabase(DATABASE_NAME, DATABASE_VERSION, DATABASE_DESCRIPTION, DATABASE_SIZE);
     db.transaction(function (tx) {
         tx.executeSql(sqlCommand, [], function (tx, rs) {
             RESULTADO(rs);
@@ -37,7 +41,7 @@ function BDConsultaOBJ(sqlCommand, RESULTADO) {
 }
 
 function BDActualizacionObj(sqlCommand,Obj) {
-    var db = window.openDatabase("SAC", "1.0", "SAC Gestion Ventas Soyoda", 200000);
+    var db = window.openDatabase(DATABASE_NAME, DATABASE_VERSION, DATABASE_DESCRIPTION, DATABASE_SIZE);
     db.transaction(function(tx){
         for (objValue in Obj){
             tx.executeSql(sqlCommand,Obj[objValue]);
@@ -45,6 +49,12 @@ function BDActualizacionObj(sqlCommand,Obj) {
     }, errorCB, successCB);    
 }
 
+ function BDActualizacionObjWithCallback(sqlCommand,Obj,callback){     
+    var db = window.openDatabase(DATABASE_NAME, DATABASE_VERSION, DATABASE_DESCRIPTION, DATABASE_SIZE);
+    db.transaction(function(tx){
+       tx.executeSql(sqlCommand,Obj,callback);        
+    }, errorCB, successCB);   
+}
 
 
 function SyncExeReady(CODIGOINTERNO,TIPOSYNC, RETORNO) {

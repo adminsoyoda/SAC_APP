@@ -1,13 +1,18 @@
 var TIMEOUT_SEARCH=15000;//milisegundos
 
-    function objectGPS(){
-
+    /**objeto gps**/
+    function objectGPS(registerDb){
+        var registerDataBase=registerDb|| false;
+        this.registerDb=registerDataBase;
+        if(this.registerDb){
+            BDActualizacion("CREATE TABLE IF NOT EXISTS APP_GPS_REGISTRO(ID INTEGER PRIMARY KEY AUTOINCREMENT,ESTADO CHAR(1) not null,LATITUD float8,LONGITUD float8,PRECISION float8,SENTENCIA TEXT)");
+        }
     }
 
+    /**obtener valores de objeto posicion,retorno un diccionario**/
     objectGPS.prototype.getValuesFromPosition= function(show,flag,position){
         var coordenates={'latitude':position.coords.latitude,
                     'longitude':position.coords.longitude,
-                    'latitude':position.coords.latitude,
                     'accuracy':position.coords.accuracy,
                     'altitudeAccuracy':position.coords.altitudeAccuracy,
                     'heading':position.coords.heading,
@@ -29,8 +34,10 @@ var TIMEOUT_SEARCH=15000;//milisegundos
         return coordenates;
     }
 
-    objectGPS.prototype.getCoordenates=function(callbackWithValues,callbackError,showAlert){
+    /**obtener las coordenadas ,busqueda por precion alta caso contrario precion baja**/
+    objectGPS.prototype.getCoordenates=function(callbackWithValues,callbackError,showAlert,updateSQL){
         var show=showAlert|| false;
+        var updateSQLSentence=updateSQL|| null;
         var self=this;
         var exitError=function(error){
                         if(show){
@@ -38,30 +45,37 @@ var TIMEOUT_SEARCH=15000;//milisegundos
                         }
                         callbackError(error);
                     };
-        this.__getCoordenates(self,show,callbackWithValues,
+        this.executeGPSSearch(self,show,callbackWithValues,
                 function(error) {
-                    self.__getCoordenates(self,show,callbackWithValues,exitError,{},true);
-                },{enableHighAccuracy:true,timeout:TIMEOUT_SEARCH},false);
+                    self.executeGPSSearch(self,show,callbackWithValues,exitError,{},true,updateSQLSentence);
+                },{enableHighAccuracy:true,timeout:TIMEOUT_SEARCH},false,updateSQLSentence);
     }
     
-    objectGPS.prototype.__getCoordenates=function(self,show,callbackWithValues,callbackError,options,flag){
+    /**ejecucino de metodos para obtener las coordenadas**/
+    objectGPS.prototype.executeGPSSearch=function(self,show,callbackWithValues,callbackError,options,flag,updateSQLSentence){
         var coordenates={};
         navigator.geolocation.getCurrentPosition(
                 function(position) {
                     coordenates=self.getValuesFromPosition(show,flag,position);
+                    if (self.registerDb){
+                        BDActualizacionObjWithCallback("INSERT INTO APP_GPS_REGISTRO(ESTADO,LATITUD,LONGITUD,PRECISION,SENTENCIA)VALUES(?,?,?,?,?)",['P',coordenates["latitude"],coordenates["longitude"],coordenates["accuracy"],updateSQLSentence],
+                        function(tx,results){
+                        });                    
+                    }
                     callbackWithValues(coordenates);
                 },callbackError,options);
         }
 
+    /**mostrar coordenadas mendiante un alert**/
     objectGPS.prototype.showCoordenates=function(){
         this.getCoordenates(function(coordenates){
 
         },function(error) {
 
-        },true);
+        },true,null);
     }
 
-
+    /**verifica si el gps esta activo**/
     objectGPS.prototype.isGpsActive=function(){
         var value=false;
         cordova.plugins.diagnostic.isLocationEnabled(
@@ -73,7 +87,8 @@ var TIMEOUT_SEARCH=15000;//milisegundos
             }); 
         return value;
     }
-     
+
+    /**ejecuta si y solo si .el gps esta activo**/
     objectGPS.prototype.continueGps=function(callbackIfTrue,callbackIfFalse){
         var pass=false;
         cordova.plugins.diagnostic.isLocationEnabled(
@@ -82,8 +97,6 @@ var TIMEOUT_SEARCH=15000;//milisegundos
                 if (!enabled){
                     alert("Active el GPS.Para continuar.");
                     cordova.exec(function(){
-
-
                     },function(errx){alert(errx);} ,'GpsService', 'on',[{}]);  
                     callbackIfFalse();
                     return false;  
@@ -105,4 +118,33 @@ var TIMEOUT_SEARCH=15000;//milisegundos
                 pass=false;
             });
         return pass;
+    }
+
+
+
+   function updateGPSinObjects(){
+        var COLUMNS=["ID","ESTADO","LATITUD","LONGITUD","PRECISION"];
+         var db = window.openDatabase(DATABASE_NAME, DATABASE_VERSION, DATABASE_DESCRIPTION, DATABASE_SIZE);
+         db.transaction(function(tx){
+            tx.executeSql("SELECT ID,ESTADO,LATITUD,LONGITUD,PRECISION,SENTENCIA FROM APP_GPS_REGISTRO WHERE ESTADO='P' AND SENTENCIA IS NOT NULL", [], function(tx,results){
+                for (var i=0; i< results.rows.length; i++) {
+                    var row=results.rows.item(i);
+                    var sql=row["SENTENCIA"];
+                    var ACTIVE_ID=row["ID"];
+                    for (objValue in COLUMNS){
+                        var FIELD_REPLACE="{"+COLUMNS[objValue]+"}";
+                        var VALUE_REPLACE=row[COLUMNS[objValue]];
+                        while (sql.indexOf(FIELD_REPLACE)!== -1){
+                           sql=sql.replace(FIELD_REPLACE,VALUE_REPLACE);
+                        }                        
+                    }
+                    tx.executeSql(sql,[],function(tx,results){
+                        tx.executeSql("UPDATE APP_GPS_REGISTRO set ESTADO=? WHERE ID=?", ['F',ACTIVE_ID]);
+                    });                    
+                }
+
+         });
+        },function(error){
+            alert(error);
+        });
     }
