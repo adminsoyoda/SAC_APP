@@ -104,14 +104,14 @@ var TIMEOUT_SEARCH=15000;//milisegundos
                 if (enabled){
                     cordova.exec(function(providerEnabled){
                     pass=providerEnabled["value"];
-                    if (!pass){
-                        alert("Configure el método de  localización como 'SOLO GPS'.");
-                        cordova.exec(function(){},function(errx){alert(errx);} ,'GpsService', 'on',[{}]);  
-                        callbackIfFalse();
-                        return false;  
-                    }
+                        if (!pass){
+                            alert("Configure el método de  localización como 'SOLO GPS'.");
+                            cordova.exec(function(){},function(errx){alert(errx);} ,'GpsService', 'on',[{}]);  
+                            callbackIfFalse();
+                            return false;  
+                        }
                     },function(errx){alert(errx);} ,'GpsService', 'provider_enabled',[{}]);  
-                }                
+                }
                 callbackIfTrue();
                 return true;
             },
