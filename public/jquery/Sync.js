@@ -119,7 +119,10 @@ function SyncProcess(loader) {
 }
 
 function SyncExeSendInfo(sqlCommand,table) {
+    alert(sqlCommand);
+    alert(table);
     BDConsultaOBJ(sqlCommand, function (obj) {
+        alert(obj);
         var dataPost = {
             OBJECTDATA: obj,
             TABLE: table
