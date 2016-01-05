@@ -121,16 +121,10 @@ function SyncProcess(loader) {
 function SyncExeSendInfo(sqlCommand,table) {
     BDConsultaOBJ(sqlCommand, function (obj) {
         var result = [];
-        var numRow = 0;
-        while (obj.isValidRow()){
-            result[numRow] = {};
-            var numField = 0;
-            while (obj.field(numField)) {
-                result[numRow][obj.fieldName(numField)] = obj.field(numField);
-                numField++;
-            }
-            obj.next();
-            numRow++;
+        alert(obj.rows.length);
+        
+        for (var i=0;i<obj.rows.length;i++) {
+            result.push(obj.rows.item(i));
         }
 
         alert(result.length);
@@ -147,4 +141,3 @@ function SyncExeSendInfo(sqlCommand,table) {
     });
     
 }
-
