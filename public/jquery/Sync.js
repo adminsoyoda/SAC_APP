@@ -119,12 +119,25 @@ function SyncProcess(loader) {
 }
 
 function SyncExeSendInfo(sqlCommand,table) {
-    alert(sqlCommand);
-    alert(table);
     BDConsultaOBJ(sqlCommand, function (obj) {
-        alert(obj);
+        var result = [];
+        var numRow = 0;
+        while (obj.isValidRow()){
+            result[numRow] = {};
+            var numField = 0;
+            while (obj.field(numField)) {
+                result[numRow][obj.fieldName(numField)] = obj.field(numField);
+                numField++;
+            }
+            obj.next();
+            numRow++;
+        }
+
+        alert(result.length);
+        alert(result);
+
         var dataPost = {
-            OBJECTDATA: obj,
+            OBJECTDATA: result,
             TABLE: table
         };
         AjaxSAC(syncServer + "/SyncReciveDeviceInfo", dataPost, true, function (callback) {
