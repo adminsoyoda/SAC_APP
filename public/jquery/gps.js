@@ -54,29 +54,16 @@ var TIMEOUT_SEARCH=15000;//milisegundos
     /**ejecucino de metodos para obtener las coordenadas**/
     objectGPS.prototype.executeGPSSearch=function(self,show,callbackWithValues,callbackError,options,flag,updateSQLSentence){
         var coordenates={};
-        var bgGeo = window.plugins.backgroundGeoLocation;        
         navigator.geolocation.getCurrentPosition(
                 function(position) {
                     coordenates=self.getValuesFromPosition(show,flag,position);
                     if (self.registerDb){
                         BDActualizacionObjWithCallback("INSERT INTO APP_GPS_REGISTRO(ESTADO,LATITUD,LONGITUD,PRECISION,SENTENCIA)VALUES(?,?,?,?,?)",['P',coordenates["latitude"],coordenates["longitude"],coordenates["accuracy"],updateSQLSentence],
                         function(tx,results){
-                             bgGeo.finish();
                         });                    
                     }
                     callbackWithValues(coordenates);
                 },callbackError,options);
-        bgGeo.configure(function(position) {
-                    console.log("Start tracking");
-                }, callbackError, {
-                            desiredAccuracy: 10,
-                            stationaryRadius: 20,
-                            distanceFilter: 30,
-                            notificationTitle: 'Background tracking', // <-- android only, customize the title of the notification
-                            notificationText: 'ENABLED', // <-- android only, customize the text of the notification
-                            debug: true // <-- enable this hear sounds for background-geolocation life-cycle.
-                            });
-        bgGeo.start();
         }
 
     /**mostrar coordenadas mendiante un alert**/
@@ -135,7 +122,7 @@ var TIMEOUT_SEARCH=15000;//milisegundos
         return pass;
     }
 
-    function updateGPSinObjects(){
+   function updateGPSinObjects(){
         var COLUMNS=["ID","ESTADO","LATITUD","LONGITUD","PRECISION"];
          var db = window.openDatabase(DATABASE_NAME, DATABASE_VERSION, DATABASE_DESCRIPTION, DATABASE_SIZE);
          db.transaction(function(tx){
