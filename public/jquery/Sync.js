@@ -121,17 +121,12 @@ function SyncProcess(loader) {
 function SyncExeSendInfo(sqlCommand,table) {
     BDConsultaOBJ(sqlCommand, function (obj) {
         var result = [];
-        alert(obj.rows.length);
-        
         for (var i=0;i<obj.rows.length;i++) {
             result.push(obj.rows.item(i));
         }
 
-        alert(result.length);
-        alert(result);
-
         var dataPost = {
-            OBJECTDATA: result,
+            OBJECTDATA: JSON.stringify(result, null, 2),
             TABLE: table
         };
         AjaxSAC(syncServer + "/SyncReciveDeviceInfo", dataPost, true, function (callback) {
