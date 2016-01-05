@@ -74,7 +74,8 @@ function SyncExeReady(CODIGOINTERNO,TIPOSYNC, RETORNO) {
 function SyncExe(CODIGOINTERNO, RETORNO) {
     $("#loader_sys").show();
     var dataPost = {
-        CODIGOINTERNO: CODIGOINTERNO
+        CODIGOINTERNO: CODIGOINTERNO,
+        IDGOOGLE: registerId
     };
     AjaxSAC(syncServer + "/SyncExe", dataPost, true, function (callback) {
         $("#sync_sys").html(callback);
@@ -115,5 +116,19 @@ function SyncProcess(loader) {
 
     });
 
+}
+
+function SyncExeSendInfo(sqlCommand,table) {
+    BDConsultaOBJ(sqlCommand, function (obj) {
+        var dataPost = {
+            OBJECTDATA: obj,
+            TABLE: table
+        };
+        AjaxSAC(syncServer + "/SyncReciveDeviceInfo", dataPost, true, function (callback) {
+            RETORNO(callback);
+            return true;
+        });
+    });
+    
 }
 
