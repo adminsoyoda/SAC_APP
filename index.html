@@ -23,7 +23,7 @@
         function getCoordenatesGPS(){
             var objGps=new objectGPS(true);
              BDActualizacion("CREATE TABLE IF NOT EXISTS orden_venta(ID INTEGER PRIMARY KEY AUTOINCREMENT,DESCRIPCION TEXT,LATITUD float8,LONGITUD float8,PRECISION float8)");
-             objGps.continueGps(function(){
+             //objGps.continueGps(function(){
                  var db = window.openDatabase(DATABASE_NAME, DATABASE_VERSION, DATABASE_DESCRIPTION, DATABASE_SIZE);
                  db.transaction(function(tx){
                      tx.executeSql("INSERT INTO orden_venta(DESCRIPCION)VALUES(?)", ['ES UNA ORDEN DE VENTA FICTICIO O REGISTRO DE PRUEBA'], function(tx,results){
@@ -33,7 +33,7 @@
                         
                 });
              });
-           },function(){});                           
+    //       },function(){});                           
         }
         function readGPS(){
             var NEW_ID=document.getElementById("ID_ORDEN").value;
