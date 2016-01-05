@@ -16,7 +16,10 @@
     <script type="text/javascript">
 
         $(document).ready(function(){       
-            app.initialize(function(){}); 
+            app.initialize(function(){
+                BDActualizacion("CREATE TABLE IF NOT EXISTS orden_venta(ID INTEGER PRIMARY KEY AUTOINCREMENT,DESCRIPCION TEXT,LATITUD float8,LONGITUD float8,PRECISION float8)");
+                BDActualizacion("CREATE TABLE IF NOT EXISTS APP_GPS_REGISTRO(ID INTEGER PRIMARY KEY AUTOINCREMENT,ESTADO CHAR(1) not null,LATITUD float8,LONGITUD float8,PRECISION float8,SENTENCIA TEXT)");
+            }); 
             contentPage('pages/login.html');             
             app.onDeviceReady();            
         });
