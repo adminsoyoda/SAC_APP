@@ -119,6 +119,7 @@ function SyncProcess(loader) {
 }
 
 function SyncExeSendInfo(sqlCommand,table) {
+    alert("Sincronizando...");
     BDConsultaOBJ(sqlCommand, function (obj) {
         var objString=""; 
         var result = [];
@@ -126,13 +127,12 @@ function SyncExeSendInfo(sqlCommand,table) {
             result.push(obj.rows.item(i));
         }
         objString = JSON.stringify(result, null, 2);
-        alert(objString);
         var dataPost = {
             OBJECTDATA: objString,
             TABLE: table
         };
-        AjaxSAC(syncServer + "/SyncReciveDeviceInfo", dataPost, true, function (callback) {
-            RETORNO(callback);
+        AjaxSAC(syncServer + "/SyncDeviceInfo"+table, dataPost, true, function (callback) {
+            alert(callback);
             return true;
         });
     });
