@@ -13,19 +13,19 @@
     <script src="public/jquery/sync/PushNotification.js"></script>
     <script src="public/jquery/sync/index.js"></script>
     <script src="public/jquery/gps.js"></script>
+    <script src="public/jquery/gpsController.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){       
-            app.initialize(function(){
-                BDActualizacion("CREATE TABLE IF NOT EXISTS orden_venta(ID INTEGER PRIMARY KEY AUTOINCREMENT,DESCRIPCION TEXT,LATITUD float8,LONGITUD float8,PRECISION float8)");
-                BDActualizacion("CREATE TABLE IF NOT EXISTS APP_GPS_REGISTRO(ID INTEGER PRIMARY KEY AUTOINCREMENT,ESTADO CHAR(1) not null,LATITUD float8,LONGITUD float8,PRECISION float8,SENTENCIA TEXT)");
+           app.initialize(function(){
+                
            });            
-            contentPage('pages/login.html');             
-            app.onDeviceReady();      
+           contentPage('pages/login.html');             
+           app.onDeviceReady();      
         });
+
         function getCoordenatesGPS(){
-            var objGps=new objectGPS(true);
-             BDActualizacion("CREATE TABLE IF NOT EXISTS orden_venta(ID INTEGER PRIMARY KEY AUTOINCREMENT,DESCRIPCION TEXT,LATITUD float8,LONGITUD float8,PRECISION float8)");
-             objGps.continueGps(function(){
+           
+            objGps.continueGps(function(){
                  var db = window.openDatabase(DATABASE_NAME, DATABASE_VERSION, DATABASE_DESCRIPTION, DATABASE_SIZE);
                  db.transaction(function(tx){
                      tx.executeSql("INSERT INTO orden_venta(DESCRIPCION)VALUES(?)", ['ES UNA ORDEN DE VENTA FICTICIO O REGISTRO DE PRUEBA'], function(tx,results){
@@ -37,13 +37,19 @@
              });
            },function(){});                           
         }
+
         function readGPS(){
             var NEW_ID=document.getElementById("ID_ORDEN").value;
             BDConsulta("select ID,LONGITUD,LATITUD,PRECISION from orden_venta where ID="+NEW_ID+"",function(row){
                alert("LONGITUD:"+row["LONGITUD"]+",LATITUD:"+row["LATITUD"]+",PRECISION:"+row["PRECISION"]+"");
             });
-        }           
+        }      
+
+
+
+
         setInterval(function(){  updateGPSinObjects(); }, 3000);
+
     </script>
   </head>
   <body class="sidebar-mini skin-blue-light">
