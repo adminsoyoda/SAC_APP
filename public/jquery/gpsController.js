@@ -30,7 +30,7 @@
 
     var objGps=new objectGPS(true);
 
-    var onBeforeUnload = function(event) {
+    /*var onBeforeUnload = function(event) {
     	event.stopPropagation();
         alert("No puede cerrar la aplicacion hasta que los trabajos terminen!!");          
         return false;     
@@ -42,4 +42,4 @@
     		onbeforeunloadFunction=onBeforeUnload;        
      	}
      	window.onbeforeunload=onbeforeunloadFunction;     	
-    }, 500);
+    }, 500);*/
