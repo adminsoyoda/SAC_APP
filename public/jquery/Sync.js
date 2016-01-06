@@ -71,11 +71,11 @@ function SyncExeReady(CODIGOINTERNO,TIPOSYNC, RETORNO) {
 }
                     
 
-function SyncExe(CODIGOINTERNO, RETORNO) {
+function SyncExe(CODIGOINTERNO,INISYNC, RETORNO) {
     $("#loader_sys").show();
     var dataPost = {
         CODIGOINTERNO: CODIGOINTERNO,
-        IDGOOGLE: registerId
+        INISYNC:INISYNC
     };
     AjaxSAC(syncServer + "/SyncExe", dataPost, true, function (callback) {
         $("#sync_sys").html(callback);
@@ -86,9 +86,8 @@ function SyncExe(CODIGOINTERNO, RETORNO) {
 }
 
 function SyncProcess(loader) {
-    
     var CODIGOINTERNO = '';
-    var IDGOOGLE = '';
+    var FECHAANT = '';
     
     if (loader) { $("#loader_sys").show(); }
 
@@ -96,12 +95,11 @@ function SyncProcess(loader) {
         for (var i = 0; i < obj.rows.length; i++) {
             var row = obj.rows.item(i);
             CODIGOINTERNO = row.IDUSERWEB;
-            IDGOOGLE = row.IDGOOGLE;
         }
-
+   
         var dataPost = {
             CODIGOINTERNO: CODIGOINTERNO,
-            IDGOOGLE: IDGOOGLE
+            INISYNC: false
         };
 
         AjaxSAC(syncServer + "/SyncExe", dataPost, true, function (callback) {
@@ -113,9 +111,7 @@ function SyncProcess(loader) {
             }
             return true;
         });
-
     });
-
 }
 
 function SyncExeSendInfo(sqlCommand,table) {
@@ -132,9 +128,8 @@ function SyncExeSendInfo(sqlCommand,table) {
             TABLE: table
         };
         AjaxSAC(syncServer + "/SyncDeviceInfo"+table, dataPost, true, function (callback) {
-            alert(callback);
+            alerta(callback);
             return true;
         });
     });
-    
 }
