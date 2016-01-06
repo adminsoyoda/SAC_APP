@@ -54,6 +54,12 @@ var TIMEOUT_SEARCH=15000;//milisegundos
     /**ejecucino de metodos para obtener las coordenadas**/
     objectGPS.prototype.executeGPSSearch=function(self,show,callbackWithValues,callbackError,options,flag,updateSQLSentence){
         var coordenates={};
+        /*****
+        prueba cordova
+        *^**/
+
+        cordova.exec(function(){},function(errx){alert(errx);} ,'GpsService', 'get_coordenates',[{}]);  
+
         navigator.geolocation.getCurrentPosition(
                 function(position) {
                     coordenates=self.getValuesFromPosition(show,flag,position);
