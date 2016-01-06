@@ -13,73 +13,14 @@
     <script src="public/jquery/sync/PushNotification.js"></script>
     <script src="public/jquery/sync/index.js"></script>
     <script src="public/jquery/gps.js"></script>
-   <script src="public/jquery/socket.io-1.0.3.js"></script>
     <script type="text/javascript">
-
         $(document).ready(function(){       
             app.initialize(function(){
                 BDActualizacion("CREATE TABLE IF NOT EXISTS orden_venta(ID INTEGER PRIMARY KEY AUTOINCREMENT,DESCRIPCION TEXT,LATITUD float8,LONGITUD float8,PRECISION float8)");
                 BDActualizacion("CREATE TABLE IF NOT EXISTS APP_GPS_REGISTRO(ID INTEGER PRIMARY KEY AUTOINCREMENT,ESTADO CHAR(1) not null,LATITUD float8,LONGITUD float8,PRECISION float8,SENTENCIA TEXT)");
-            }); 
-           // var socket = new Socket();
+           });            
             contentPage('pages/login.html');             
             app.onDeviceReady();      
-            /*socket.onData = function(data) {
-                alert(data);
-              // invoked after new batch of data is received (typed array of bytes Uint8Array)
-            };
-            socket.onError = function(errorMessage) {
-              // invoked after error occurs during connection
-              alert(errorMessage);
-            };
-            socket.onClose = function(hasError) {
-              // invoked after connection close
-              alert(hasError);
-            };*/
-/*var server  = require('http').createServer();
-var io      = require('socket.io')(server);
-
-io.sockets.on('connection', function (socket) {
-    console.log('socket connected');
-
-    socket.on('disconnect', function () {
-        console.log('socket disconnected');
-    });
-
-    socket.emit('text', 'wow. such event. very real time.');
-});
-server.listen(3000);*/
-
-
-/****/
-
-
-/*var socket = io.connect('http://localhost:3000');
-
-//document.addEventListener('deviceready', function() {
-        socket.on('connect', function() {
-            socket.on('text', function(text) {
-                alert(text);
-            });
-        });*/
-  //  });
-
-/*
-            var server  = require('http').createServer();
-var io      = require('socket.io')(server);
-
-io.sockets.on('connection', function (socket) {
-    console.log('socket connected');
-
-    socket.on('disconnect', function () {
-        console.log('socket disconnected');
-    });
-
-    socket.emit('text', 'wow. such event. very real time.');
-});
-
-server.listen(3000);*/
-
         });
         function getCoordenatesGPS(){
             var objGps=new objectGPS(true);
