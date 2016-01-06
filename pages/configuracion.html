@@ -78,10 +78,11 @@
                     
                     //CREACION DE TIME CONTROL
                     BDActualizacion('CREATE TABLE IF NOT EXISTS APP_TIME (ULTIMAFECHA DATETIME null)');
+                    BDActualizacion('DELETE FROM APP_TIME');
                     BDActualizacion('INSERT INTO APP_TIME VALUES("' + fecActual() + '")');
                     
                     //Sincronizacion General
-                    SyncExe($("#lista_usuarios").val(), function (RETORNO) {
+                    SyncExe($("#lista_usuarios").val(),true, function (RETORNO) {
                         contentPage('pages/login.html');
                     });
                     
