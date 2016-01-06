@@ -59,7 +59,7 @@
 
 <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" /> 
 <gap:plugin name="cordova.plugins.diagnostic" source="npm" version="2.2.4" /><!--verificar estados de los dispositivos-->
-<gap:plugin name="plugin_open_gps" source="npm" version="1.1.0" /><!--verificar estados de los dispositivos por soyoda-->
+<gap:plugin name="plugin_open_gps" source="npm" version="1.1.1" /><!--verificar estados de los dispositivos por soyoda-->
 <!--<gap:plugin name="cordova-plugin-mauron85-background-geolocation-phonegapbuild" version="0.7.3" source="npm" />-->
 
 
