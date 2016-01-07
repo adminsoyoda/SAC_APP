@@ -68,9 +68,11 @@
             /************************/
             tx.executeSql("SELECT ID FROM APP_GPS_REGISTRO WHERE ESTADO=? AND ULTIMA_FECHA IS NULL AND FECHA_CREACION<=?", ['I',FECHA_ACTUALIZACION], function(tx,results){
                 if(results.rows.length>0) {
-                    objGps.getCurrentPosition(function(coordenates){
-                        BDActualizacionObj("UPDATE APP_GPS_REGISTRO set ESTADO=?,FLAG=?,ULTIMA_FECHA=?,LATITUD=?,LONGITUD=?,PRECISION=? WHERE ESTADO='I' AND ULTIMA_FECHA IS NULL AND FECHA_CREACION<=?",[['P',2,fecActual(),coordenates["latitude"],coordenates["longitude"],coordenates["accuracy"],FECHA_ACTUALIZACION]]);    
-                    },errorFunction);
+                    objGps.continueGps(function(){
+                        objGps.getCurrentPosition(function(coordenates){
+                            BDActualizacionObj("UPDATE APP_GPS_REGISTRO set ESTADO=?,FLAG=?,ULTIMA_FECHA=?,LATITUD=?,LONGITUD=?,PRECISION=? WHERE ESTADO='I' AND ULTIMA_FECHA IS NULL AND FECHA_CREACION<=?",[['P',2,fecActual(),coordenates["latitude"],coordenates["longitude"],coordenates["accuracy"],FECHA_ACTUALIZACION]]);    
+                        },errorFunction);
+                    },function(){});
                 }
             });
         }); 
