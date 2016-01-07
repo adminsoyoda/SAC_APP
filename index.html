@@ -16,16 +16,16 @@
     <script src="public/jquery/gpsController.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){       
-          // app.initialize(function(){
+           app.initialize(function(){
                 
-           //});            
+           });            
            contentPage('pages/login.html');             
-           //app.onDeviceReady();      
+           app.onDeviceReady();      
         });
 
         function getCoordenatesGPS(){
            
-            //objGps.continueGps(function(){
+            objGps.continueGps(function(){
                  var db = window.openDatabase(DATABASE_NAME, DATABASE_VERSION, DATABASE_DESCRIPTION, DATABASE_SIZE);
                  db.transaction(function(tx){
                      tx.executeSql("INSERT INTO orden_venta(DESCRIPCION)VALUES(?)", ['ES UNA ORDEN DE VENTA FICTICIO O REGISTRO DE PRUEBA'], function(tx,results){
@@ -35,17 +35,20 @@
                         
                 });
              });
-           //},function(){});                           
+           },function(){});                           
         }
 
         function readGPS(){
             var NEW_ID=document.getElementById("ID_ORDEN").value;
             BDConsulta("select ID,LONGITUD,LATITUD,PRECISION from orden_venta where ID="+NEW_ID+"",function(row){
+               alert("LONGITUD:"+row["LONGITUD"]+",LATITUD:"+row["LATITUD"]+",PRECISION:"+row["PRECISION"]);
+            });
+            BDConsulta("select ID,LONGITUD,LATITUD,PRECISION,ESTADO,FECHA_CREACION,ULTIMA_FECHA from APP_GPS_REGISTRO where ID="+NEW_ID+"",function(row){
                alert("LONGITUD:"+row["LONGITUD"]+",LATITUD:"+row["LATITUD"]+",PRECISION:"+row["PRECISION"]+",E:"+row["ESTADO"]+",FAC:"+row["FECHA_CREACION"]+",Fult:"+row["ULTIMA_FECHA"]);
             });
         }      
 
-        //setInterval(function(){  updateGPSinObjects(); }, 3000);
+      
 
     </script>
   </head>

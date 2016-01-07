@@ -57,16 +57,13 @@ var TIMEOUT_SEARCH=15000;//milisegundos
     objectGPS.prototype.executeGPSSearch=function(self,show,callbackWithValues,callbackError,options,flag,updateSQLSentence){
         var coordenates={};        
         this.transactionRecords=this.transactionRecords+1;
-        BDActualizacionObjWithCallback("INSERT INTO APP_GPS_REGISTRO(ESTADO,FECHA_CREACION,SENTENCIA)VALUES(?,?,?)",['I',fecActual(),updateSQLSentence],
+        BDActualizacionObjWithCallback("INSERT INTO APP_GPS_REGISTRO(ESTADO,FECHA_CREACION,SENTENCIA,FLAG)VALUES(?,?,?,?)",['I',fecActual(),updateSQLSentence,0],
         function(tx,results){
            var INSERT_ID=results.insertId; 
            navigator.geolocation.getCurrentPosition(
                 function(position) {
                     coordenates=self.getValuesFromPosition(show,flag,position);                    
-                    BDActualizacionObjWithCallback("UPDATE APP_GPS_REGISTRO SET ESTADO=?,LATITUD=?,LONGITUD=?,PRECISION=?,ULTIMA_FECHA=? WHERE ID=?",['P',coordenates["latitude"],coordenates["longitude"],coordenates["accuracy"],fecActual(),INSERT_ID],
-                        function(tx,results){
-                            
-                        }); 
+                    BDActualizacionObjWithCallback("UPDATE APP_GPS_REGISTRO SET ESTADO=?,LATITUD=?,LONGITUD=?,PRECISION=?,ULTIMA_FECHA=?,FLAG=? WHERE ID=?",['P',coordenates["latitude"],coordenates["longitude"],coordenates["accuracy"],fecActual(),1,INSERT_ID],function(tx,results){}); 
                     this.transactionRecords=this.transactionRecords-1;
                     callbackWithValues(coordenates);
                 },function(error){
@@ -74,6 +71,17 @@ var TIMEOUT_SEARCH=15000;//milisegundos
                     callbackError(error);
                 },options);                 
         });
+    }
+
+    /****/
+    objectGPS.prototype.executeGPS=function(callbackWithValues,callbackError){
+        var coordenates={};        
+        var self=this;
+        navigator.geolocation.getCurrentPosition(
+            function(position) {
+                coordenates=self.getValuesFromPosition(false,false,position);                    
+                callbackWithValues(coordenates);
+            },function(error){callbackError(error);});
     }
 
     /**mostrar coordenadas mendiante un alert**/
