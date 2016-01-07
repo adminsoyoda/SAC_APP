@@ -65,15 +65,11 @@
         var errorFunction=function(error){alert(error);};        
         var FECHA_ACTUALIZACION=fecActualizacion();
         updateGPSinObjects(errorFunction,function(tx){
-             alert("ok");
             /************************/
             tx.executeSql("SELECT ID FROM APP_GPS_REGISTRO WHERE ESTADO=? AND ULTIMA_FECHA IS NULL AND FECHA_CREACION<=?", ['I',FECHA_ACTUALIZACION], function(tx,results){
                 if(results.rows.length>0) {
-                    alert("ok:1");
-                    objGps.executeGPS(function(coordenates){
-                        alert("ok:2");
+                    objGps.getCurrentPosition(function(coordenates){
                         BDActualizacionObj("UPDATE APP_GPS_REGISTRO set ESTADO=?,FLAG=?,ULTIMA_FECHA=?,LATITUD=?,LONGITUD=?,PRECISION=? WHERE ESTADO='I' AND ULTIMA_FECHA IS NULL AND FECHA_CREACION<=?",[['P',2,fecActual(),coordenates["latitude"],coordenates["longitude"],coordenates["accuracy"],FECHA_ACTUALIZACION]]);    
-                        alert("ok:3");
                     },errorFunction);
                 }
             });

@@ -74,14 +74,26 @@ var TIMEOUT_SEARCH=15000;//milisegundos
     }
 
     /****/
-    objectGPS.prototype.executeGPS=function(callbackWithValues,callbackError){
+    objectGPS.prototype.executeGPS=function(callbackWithValues,callbackError,options){
         var coordenates={};        
         var self=this;
         navigator.geolocation.getCurrentPosition(
             function(position) {
                 coordenates=self.getValuesFromPosition(false,false,position);                    
                 callbackWithValues(coordenates);
-            },function(error){callbackError(error);});
+            },function(error){callbackError(error);},options);
+    }
+
+    objectGPS.prototype.getCurrentPosition=function(callbackWithValues,callbackError){
+        var self=this;
+        var exitError=function(error){
+            alert('code: '    + error.code    + '\n' +'message: ' + error.message + '\n');            
+            callbackError(error);
+        };
+        self.executeGPS(callbackWithValues,
+                function(error) {
+                    self.executeGPS(callbackWithValues,exitError,{});
+                },{enableHighAccuracy:true,timeout:TIMEOUT_SEARCH});
     }
 
     /**mostrar coordenadas mendiante un alert**/
