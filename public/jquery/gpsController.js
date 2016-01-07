@@ -1,4 +1,5 @@
 	var MINUS_TIME_SECOND=(1*60*1000);
+    var searchGPS=false;
     BDActualizacion("CREATE TABLE IF NOT EXISTS orden_venta(ID INTEGER PRIMARY KEY AUTOINCREMENT,DESCRIPCION TEXT,LATITUD float8,LONGITUD float8,PRECISION float8)");
 	BDActualizacion("CREATE TABLE IF NOT EXISTS APP_GPS_REGISTRO(ID INTEGER PRIMARY KEY AUTOINCREMENT,ESTADO CHAR(1) not null,LATITUD float8,LONGITUD float8,PRECISION float8,SENTENCIA TEXT,FECHA_CREACION DATETIME null,ULTIMA_FECHA DATETIME null,FLAG INTEGER)");
 	
@@ -68,11 +69,15 @@
             /************************/
             tx.executeSql("SELECT ID FROM APP_GPS_REGISTRO WHERE ESTADO=? AND ULTIMA_FECHA IS NULL AND FECHA_CREACION<=?", ['I',FECHA_ACTUALIZACION], function(tx,results){
                 if(results.rows.length>0) {
-                    objGps.continueGps(function(){
-                        objGps.getCurrentPosition(function(coordenates){
-                            BDActualizacionObj("UPDATE APP_GPS_REGISTRO set ESTADO=?,FLAG=?,ULTIMA_FECHA=?,LATITUD=?,LONGITUD=?,PRECISION=? WHERE ESTADO='I' AND ULTIMA_FECHA IS NULL AND FECHA_CREACION<=?",[['P',2,fecActual(),coordenates["latitude"],coordenates["longitude"],coordenates["accuracy"],FECHA_ACTUALIZACION]]);    
-                        },errorFunction);
-                    },function(){});
+                    if (!searchGPS){
+                        objGps.continueGps(function(){
+                            searchGPS=true;
+                            objGps.getCurrentPosition(function(coordenates){
+                                BDActualizacionObj("UPDATE APP_GPS_REGISTRO set ESTADO=?,FLAG=?,ULTIMA_FECHA=?,LATITUD=?,LONGITUD=?,PRECISION=? WHERE ESTADO='I' AND ULTIMA_FECHA IS NULL AND FECHA_CREACION<=?",[['P',2,fecActual(),coordenates["latitude"],coordenates["longitude"],coordenates["accuracy"],FECHA_ACTUALIZACION]]);    
+                                searchGPS=false;
+                            },errorFunction);
+                        },function(){});
+                    }
                 }
             });
         }); 

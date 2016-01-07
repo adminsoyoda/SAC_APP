@@ -137,7 +137,6 @@ var TIMEOUT_SEARCH=15000;//milisegundos
                     return false;  
                 }
                 cordova.exec(function(providerEnabled){
-                    alert(providerEnabled);
                     pass=providerEnabled["value"];
                         if (!pass){
                             alert("Configure el método de  localización como 'SOLO GPS'.");
