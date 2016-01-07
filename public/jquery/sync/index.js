@@ -62,8 +62,12 @@ var app = {
             case 'message':
                 // NOTIFICACION!!! 
                 //e.event.PreventDefault();
+                try{
                 alert(e.data.fieldhidden);
-                message_sync_div.html(e.message);
+                message_sync_div.html(e.message);                    
+                }catch(err){
+                    alert(err);
+                }
                 break;
             case 'error':
 
