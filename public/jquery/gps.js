@@ -2,7 +2,7 @@ var TIMEOUT_SEARCH=15000;//milisegundos
 
     /**objeto gps**/
     function objectGPS(){
-        this.transactionRecords=0;       
+        this.transactionRecords=0;         
     }
 
     /**registros procesandose**/
