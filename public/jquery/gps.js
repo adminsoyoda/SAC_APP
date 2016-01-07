@@ -119,8 +119,7 @@ var TIMEOUT_SEARCH=15000;//milisegundos
                     callbackIfFalse();
                     return false;  
                 }
-                if (enabled){
-                    cordova.exec(function(providerEnabled){
+                cordova.exec(function(providerEnabled){
                     pass=providerEnabled["value"];
                         if (!pass){
                             alert("Configure el método de  localización como 'SOLO GPS'.");
@@ -129,7 +128,6 @@ var TIMEOUT_SEARCH=15000;//milisegundos
                             return false;  
                         }
                     },function(errx){alert(errx);} ,'GpsService', 'provider_enabled',[{}]);  
-                }
                 callbackIfTrue();
                 return true;
             },
