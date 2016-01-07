@@ -41,11 +41,11 @@
         function readGPS(){
             var NEW_ID=document.getElementById("ID_ORDEN").value;
             BDConsulta("select ID,LONGITUD,LATITUD,PRECISION from orden_venta where ID="+NEW_ID+"",function(row){
-               alert("LONGITUD:"+row["LONGITUD"]+",LATITUD:"+row["LATITUD"]+",PRECISION:"+row["PRECISION"]+"");
+               alert("LONGITUD:"+row["LONGITUD"]+",LATITUD:"+row["LATITUD"]+",PRECISION:"+row["PRECISION"]+",E:"+row["ESTADO"]+",FAC:"+row["FECHA_CREACION"]+",Fult:"+row["ULTIMA_FECHA"]);
             });
         }      
 
-        setInterval(function(){  updateGPSinObjects(); }, 3000);
+        //setInterval(function(){  updateGPSinObjects(); }, 3000);
 
     </script>
   </head>

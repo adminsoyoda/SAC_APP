@@ -1,15 +1,16 @@
 var TIMEOUT_SEARCH=15000;//milisegundos
 
     /**objeto gps**/
-    function objectGPS(registerDb){
-        var registerDataBase=registerDb|| false;
-        this.registerDb=registerDataBase;
-        this.transactionRecords=0;
+    function objectGPS(){
+        this.transactionRecords=0;       
     }
 
+    /**registros procesandose**/
     objectGPS.prototype.getStatusRecords=function(){
         return this.transactionRecords;
     }
+
+
     /**obtener valores de objeto posicion,retorno un diccionario**/
     objectGPS.prototype.getValuesFromPosition= function(show,flag,position){
         var coordenates={'latitude':position.coords.latitude,
@@ -41,11 +42,11 @@ var TIMEOUT_SEARCH=15000;//milisegundos
         var updateSQLSentence=updateSQL|| null;
         var self=this;
         var exitError=function(error){
-                        if(show){
-                            alert('code: '    + error.code    + '\n' +'message: ' + error.message + '\n');
-                        }
-                        callbackError(error);
-                    };
+            if(show){
+                alert('code: '    + error.code    + '\n' +'message: ' + error.message + '\n');
+            }
+            callbackError(error);
+        };
         this.executeGPSSearch(self,show,callbackWithValues,
                 function(error) {
                     self.executeGPSSearch(self,show,callbackWithValues,exitError,{},true,updateSQLSentence);
@@ -56,22 +57,24 @@ var TIMEOUT_SEARCH=15000;//milisegundos
     objectGPS.prototype.executeGPSSearch=function(self,show,callbackWithValues,callbackError,options,flag,updateSQLSentence){
         var coordenates={};        
         this.transactionRecords=this.transactionRecords+1;
-        navigator.geolocation.getCurrentPosition(
+        BDActualizacionObjWithCallback("INSERT INTO APP_GPS_REGISTRO(ESTADO,FECHA_CREACION,SENTENCIA)VALUES(?,?,?)",['I',fecActual(),updateSQLSentence],
+        function(tx,results){
+           var INSERT_ID=results.insertId; 
+           navigator.geolocation.getCurrentPosition(
                 function(position) {
-                    coordenates=self.getValuesFromPosition(show,flag,position);
-                    if (self.registerDb){
-                        BDActualizacionObjWithCallback("INSERT INTO APP_GPS_REGISTRO(ESTADO,LATITUD,LONGITUD,PRECISION,SENTENCIA)VALUES(?,?,?,?,?)",['P',coordenates["latitude"],coordenates["longitude"],coordenates["accuracy"],updateSQLSentence],
+                    coordenates=self.getValuesFromPosition(show,flag,position);                    
+                    BDActualizacionObjWithCallback("UPDATE APP_GPS_REGISTRO SET ESTADO=?,LATITUD=?,LONGITUD=?,PRECISION=?,ULTIMA_FECHA=? WHERE ID=?",['P',coordenates["latitude"],coordenates["longitude"],coordenates["accuracy"],fecActual(),INSERT_ID],
                         function(tx,results){
                             
-                        });                    
-                    }
+                        }); 
                     this.transactionRecords=this.transactionRecords-1;
                     callbackWithValues(coordenates);
                 },function(error){
                     this.transactionRecords=this.transactionRecords-1;
                     callbackError(error);
-                },options);
-        }
+                },options);                 
+        });
+    }
 
     /**mostrar coordenadas mendiante un alert**/
     objectGPS.prototype.showCoordenates=function(){

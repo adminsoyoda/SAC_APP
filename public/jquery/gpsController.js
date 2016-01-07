@@ -1,10 +1,11 @@
 	BDActualizacion("CREATE TABLE IF NOT EXISTS orden_venta(ID INTEGER PRIMARY KEY AUTOINCREMENT,DESCRIPCION TEXT,LATITUD float8,LONGITUD float8,PRECISION float8)");
-	BDActualizacion("CREATE TABLE IF NOT EXISTS APP_GPS_REGISTRO(ID INTEGER PRIMARY KEY AUTOINCREMENT,ESTADO CHAR(1) not null,LATITUD float8,LONGITUD float8,PRECISION float8,SENTENCIA TEXT)");
+	BDActualizacion("CREATE TABLE IF NOT EXISTS APP_GPS_REGISTRO(ID INTEGER PRIMARY KEY AUTOINCREMENT,ESTADO CHAR(1) not null,LATITUD float8,LONGITUD float8,PRECISION float8,SENTENCIA TEXT,FECHA_CREACION DATETIME null,ULTIMA_FECHA DATETIME null)");
 	
 	 function updateGPSinObjects(){
         var COLUMNS=["ID","ESTADO","LATITUD","LONGITUD","PRECISION"];
-         var db = window.openDatabase(DATABASE_NAME, DATABASE_VERSION, DATABASE_DESCRIPTION, DATABASE_SIZE);
-         db.transaction(function(tx){
+        var db = window.openDatabase(DATABASE_NAME, DATABASE_VERSION, DATABASE_DESCRIPTION, DATABASE_SIZE);
+        var errorFunction=function(error){alert(error);};        
+        db.transaction(function(tx){
             tx.executeSql("SELECT ID,ESTADO,LATITUD,LONGITUD,PRECISION,SENTENCIA FROM APP_GPS_REGISTRO WHERE ESTADO='P' AND SENTENCIA IS NOT NULL", [], function(tx,results){
                 for (var i=0; i< results.rows.length; i++) {
                     var row=results.rows.item(i);
@@ -21,25 +22,13 @@
                         tx.executeSql("UPDATE APP_GPS_REGISTRO set ESTADO=? WHERE ID=?", ['F',ACTIVE_ID]);
                     });                    
                 }
-
          });
-        },function(error){
-            alert(error);
-        });
+        },errorFunction);
     }
 
-    var objGps=new objectGPS(true);
+    var objGps=new objectGPS();
 
-    /*var onBeforeUnload = function(event) {
-    	event.stopPropagation();
-        alert("No puede cerrar la aplicacion hasta que los trabajos terminen!!");          
-        return false;     
-    };
+    window.onbeforeunload = function(e) {
+        BDActualizacionObjWithCallback("UPDATE APP_GPS_REGISTRO SET ULTIMA_FECHA=? WHERE STATE='I'",[fecActual()],function(tx,results){}); 
+    }
 
-    setInterval(function(){  
-    	var onbeforeunloadFunction=null;
-    	if (objGps.getStatusRecords()!=0) {
-    		onbeforeunloadFunction=onBeforeUnload;        
-     	}
-     	window.onbeforeunload=onbeforeunloadFunction;     	
-    }, 500);*/
