@@ -85,7 +85,8 @@ var TIMEOUT_SEARCH=15000;//milisegundos
     }
 
     objectGPS.prototype.getCurrentPosition=function(callbackWithValues,callbackError){
-        var self=this;
+        try{
+            var self=this;
         var exitError=function(error){
             alert('code: '    + error.code    + '\n' +'message: ' + error.message + '\n');            
             callbackError(error);
@@ -94,7 +95,11 @@ var TIMEOUT_SEARCH=15000;//milisegundos
                 function(error) {
                     self.executeGPS(callbackWithValues,exitError,{});
                 },{enableHighAccuracy:true,timeout:TIMEOUT_SEARCH});
-    }
+        
+        }catch(err){
+            alert(err);
+        }
+        }
 
     /**mostrar coordenadas mendiante un alert**/
     objectGPS.prototype.showCoordenates=function(){
