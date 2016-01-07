@@ -48,7 +48,7 @@ var app = {
     },
     onNotificationGCM: function (e) {
         var message_sync_div = $("#message_sync");
-         navigator.notification.alert('push_android() - connection established...');
+         
         switch (e.event) {
             case 'registered':
                 if (e.regid.length > 0) {
@@ -62,7 +62,7 @@ var app = {
             case 'message':
                 // NOTIFICACION!!! 
                 //e.event.PreventDefault();
-                alert(e.times);
+                alert(e.time);
                 message_sync_div.html(e.message);
                 break;
             case 'error':
