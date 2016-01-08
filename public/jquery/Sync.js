@@ -3,7 +3,7 @@ var syncServer = 'http://192.168.2.41:81/SAC/Sync';
 
 var PROJECT_ID_GOOGLE = "994360885610";
 var admPass = "sa";
-var DATABASE_NAME="SAC_PRUEBA2";
+var DATABASE_NAME="SAC_PRUEBA3";
 var DATABASE_VERSION="1.0";
 var DATABASE_DESCRIPTION="SAC Gestion Ventas Soyoda";
 var DATABASE_SIZE=200000;

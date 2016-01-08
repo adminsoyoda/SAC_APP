@@ -50,22 +50,17 @@ var app = {
     onNotificationGCM: function (e) {
         var message_sync_div = $("#message_sync");
          
-        switch (e.events) {
+        switch (e.event) {
             case 'registered':
-                        alert("ok6");
-                                    alert(e.regid);    
                 if (e.regid.length > 0) {
                     registerId= e.regid;
-                    alert(registerId);
                 }
                 break;
-
             case 'message':
                 message_sync_div.html(e.message);                    
                 break;
             case 'error':
-
-                    break;
+                break;
             default:
                 break;
         }
