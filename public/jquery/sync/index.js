@@ -52,22 +52,12 @@ var app = {
         switch (e.events) {
             case 'registered':
                 if (e.regid.length > 0) {
-                    //console.log("Regid " + e.regid);
-                    //alert('Google ID API = ' + e.regid);
-                    //Cuando se registre le pasamos el regid al input 
                     registerId= e.regid;
                 }
                 break;
 
             case 'message':
-                // NOTIFICACION!!! 
-                //e.event.PreventDefault();
-                try{
-                //alert(e.fieldhidden);
                 message_sync_div.html(e.message);                    
-                }catch(err){
-                    alert(err);
-                }
                 break;
             case 'error':
 
