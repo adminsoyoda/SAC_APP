@@ -12,6 +12,7 @@ var app = {
     // 'load', 'deviceready', 'offline', and 'online'. 
     bindEvents: function () {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+        document.addEventListener("pause", this.onDeviceReady, false);
     },
     // deviceready Event Handler 
     // 
@@ -60,6 +61,7 @@ var app = {
                 break;
             case 'error':
                 break;
+               // document.getElementById("ID_ORDEN").value=
             default:
                 break;
         }
