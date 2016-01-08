@@ -81,6 +81,6 @@ var app = {
 };
 
 function setIdRegistered(){//asiginar id de google
-    alert(registerId);
+    //alert(registerId);
     document.getElementById('IDGOOGLE').value = registerId;
 }
