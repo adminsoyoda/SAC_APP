@@ -53,6 +53,7 @@ var app = {
             case 'registered':
                 if (e.regid.length > 0) {
                     registerId= e.regid;
+                    alert(registerId);
                 }
                 break;
 
