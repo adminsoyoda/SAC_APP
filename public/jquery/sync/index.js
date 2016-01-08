@@ -32,6 +32,7 @@ var app = {
         if (device.platform == 'android' || device.platform == 'Android') {
             //alert("Register called");
             //tu Project ID aca!! 
+            alert("ok5");            
             pushNotification.register(this.successHandler, this.errorHandler, { "senderID": PROJECT_ID_GOOGLE, "ecb": "app.onNotificationGCM" });
         }
         else {
@@ -51,6 +52,8 @@ var app = {
          
         switch (e.events) {
             case 'registered':
+                        alert("ok6");
+                                    alert(e.regid);    
                 if (e.regid.length > 0) {
                     registerId= e.regid;
                     alert(registerId);
@@ -84,5 +87,6 @@ var app = {
 };
 
 function setIdRegistered(){//asiginar id de google
+    alert(registerId);
     document.getElementById('IDGOOGLE').value = registerId;
 }
