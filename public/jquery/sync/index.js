@@ -32,7 +32,6 @@ var app = {
         if (device.platform == 'android' || device.platform == 'Android') {
             //alert("Register called");
             //tu Project ID aca!! 
-            alert("ok5");            
             pushNotification.register(this.successHandler, this.errorHandler, { "senderID": PROJECT_ID_GOOGLE, "ecb": "app.onNotificationGCM" });
         }
         else {
