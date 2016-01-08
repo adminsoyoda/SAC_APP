@@ -49,7 +49,7 @@ var app = {
     onNotificationGCM: function (e) {
         var message_sync_div = $("#message_sync");
          
-        switch (e.event) {
+        switch (e.events) {
             case 'registered':
                 if (e.regid.length > 0) {
                     //console.log("Regid " + e.regid);
@@ -63,7 +63,7 @@ var app = {
                 // NOTIFICACION!!! 
                 //e.event.PreventDefault();
                 try{
-                alert(e.data.fieldhidden);
+                //alert(e.fieldhidden);
                 message_sync_div.html(e.message);                    
                 }catch(err){
                     alert(err);
