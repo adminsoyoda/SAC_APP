@@ -57,6 +57,7 @@ var app = {
                 break;
             case 'message':
                 alert(e.message);
+                alert(e.exec);
                 message_sync_div.html(e.message);                    
                 break;
             case 'error':
