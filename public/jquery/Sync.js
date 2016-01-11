@@ -75,7 +75,8 @@ function SyncExe(CODIGOINTERNO,INISYNC, RETORNO) {
     $("#loader_sys").show();
     var dataPost = {
         CODIGOINTERNO: CODIGOINTERNO,
-        INISYNC:INISYNC
+        INISYNC:INISYNC,
+        LOADER:INISYNC
     };
     AjaxSAC(syncServer + "/SyncExe", dataPost, true, function (callback) {
         $("#sync_sys").html(callback);
@@ -99,7 +100,8 @@ function SyncProcess(loader) {
    
         var dataPost = {
             CODIGOINTERNO: CODIGOINTERNO,
-            INISYNC: false
+            INISYNC: false,
+            LOADER:loader
         };
 
         AjaxSAC(syncServer + "/SyncExe", dataPost, true, function (callback) {
@@ -114,8 +116,8 @@ function SyncProcess(loader) {
     });
 }
 
-function SyncExeSendInfo(sqlCommand,table) {
-    alert("Sincronizando...");
+function SyncExeSendInfo(sqlCommand,table,loader) {
+    if (loader) { $("#loader_sys").show(); }
     BDConsultaOBJ(sqlCommand, function (obj) {
         var objString=""; 
         var result = [];
@@ -128,7 +130,9 @@ function SyncExeSendInfo(sqlCommand,table) {
             TABLE: table
         };
         AjaxSAC(syncServer + "/SyncDeviceInfo"+table, dataPost, true, function (callback) {
-            alerta(callback);
+            if (loader) {
+                alerta(callback);
+            }
             return true;
         });
     });
