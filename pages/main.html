@@ -56,6 +56,21 @@
             }
         });
 
+        //Menu Empresa de Usuario
+        BDConsultaOBJ("SELECT * FROM APP_EMPRESA;", function (obj) {
+            for (var i = 0; i < obj.rows.length; i++) {
+                var row = obj.rows.item(i);
+                if(i==0){
+                    masterEmpresa=row.RAZONSOCIAL
+                    $("#nameEmpresa").html(row.RAZONSOCIAL);
+                    $("#listEmp").append("<li><a href='#' onclick='cambioEmpresa(\"" + row.RAZONSOCIAL + "\")'><i class='fa fa-users text-aqua'></i> " + row.RAZONSOCIAL + "</a></li>");
+                    
+                 }else{
+                     $("#listEmp").append("<li><a href='#' onclick='cambioEmpresa(\"" + row.RAZONSOCIAL + "\")'><i class='fa fa-users text-aqua'></i> " + row.RAZONSOCIAL + "</a></li>");
+                 }
+            }
+        });
+        
         //Option Initial
         loadOption('10000001');
     });
@@ -65,7 +80,11 @@
         contentPage('pages/login.html');
     }
 
-    
+    //Funcion Set Empresa
+    function cambioEmpresa(newEmpresa){
+        masterEmpresa=newEmpresa;
+        $("#nameEmpresa").html(newEmpresa);
+    }
 
 </script>
 
@@ -83,6 +102,32 @@
         </a>
         <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
+            
+            <li class="dropdown notifications-menu open">
+                <a aria-expanded="true" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-circle"></i>
+                  <span class="label label-warning" id="nameEmpresa"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li class="header">Ud Tiene Acceso a las siguientes Empresas</li>
+                  <li>
+                    <!-- inner menu: contains the actual data -->
+                    <div style="position: relative; overflow: hidden; width: auto; height: 200px;" class="slimScrollDiv">
+                    <ul style="overflow: hidden; width: 100%; height: 200px;" class="menu" id="listEmp">
+
+                    </ul>
+                    <div style="background: rgb(0, 0, 0) none repeat scroll 0% 0%; width: 3px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 195.122px;" class="slimScrollBar"></div><div style="width: 3px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51) none repeat scroll 0% 0%; opacity: 0.2; z-index: 90; right: 1px;" class="slimScrollRail"></div></div>
+                  </li>
+                  <li class="footer"><a href="#"></a></li>
+                </ul>
+            </li>
+            
+            <li class="dropdown notifications-menu" onclick="SyncProcess(true);">
+                <a aria-expanded="true" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-refresh"></i>
+                </a>
+            </li>
+            
             <!--
             <li class="dropdown notifications-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
