@@ -1,3 +1,6 @@
+//Variable Global de Empresa
+var masterEmpresa = "";
+
 //Contenedor General
 function contentPage(ContenedorGlobal) {
     $("#content_master").hide();
