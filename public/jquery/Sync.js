@@ -107,10 +107,6 @@ function SyncProcess(loader) {
         AjaxSAC(syncServer + "/SyncExe", dataPost, true, function (callback) {
             $("#sync_sys").html(callback);
             $("#loader_sys").hide();
-            if (loader) {
-                alert('Ok');
-                contentPage('pages/main.html');
-            }
             return true;
         });
     });
