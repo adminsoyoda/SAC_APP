@@ -24,12 +24,14 @@
         });
         function getCoordenatesGPS(){
            
-            objGps.continueGps(function(){
+            objGps.continueGps(function(){//valida si gps esta activo
+                 
                  var db = window.openDatabase(DATABASE_NAME, DATABASE_VERSION, DATABASE_DESCRIPTION, DATABASE_SIZE);
                  db.transaction(function(tx){
                      tx.executeSql("INSERT INTO orden_venta(DESCRIPCION)VALUES(?)", ['ES UNA ORDEN DE VENTA FICTICIO O REGISTRO DE PRUEBA'], function(tx,results){
                         var NEW_ID=results.insertId;
                         document.getElementById("ID_ORDEN").value = NEW_ID;
+                        ///enviar actualizacion para obtener coordendas
                         objGps.getCoordenates(function(){},function(){},true,"update orden_venta set LONGITUD={LONGITUD},PRECISION={PRECISION},LATITUD={LATITUD} where ID="+NEW_ID+"");
                         
                 });
