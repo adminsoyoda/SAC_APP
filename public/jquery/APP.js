@@ -103,7 +103,7 @@ function loadOption(option) {
             var row = obj.rows.item(i);
             if(option==row.IDMENU)
             {
-                $("#App_content").html(row.HTML);
+                $("#App_content").html(unescape(row.HTML));
             }
         }
     });
