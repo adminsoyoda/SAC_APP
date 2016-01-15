@@ -326,3 +326,19 @@ function iniCalendar() {
 	timezone: 'UTC'
 });		
 }
+
+//Solo Numeros
+function SoloNumero(idnum){
+   $("#"+idnum).numeric(".");
+}
+
+//Solo Numeros
+function SoloNumeroCantidad(idnum){
+   $("#"+idnum).numeric("");
+}
+
+//Solo Numeros verificar Vacios
+function SoloNumeroEmpty(idnum){
+   if($("#"+idnum).val()==''){return 0;}
+   return $("#"+idnum).val();
+}
