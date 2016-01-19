@@ -48,6 +48,7 @@
                         if (obj.CONT > 0) {
                             BDConsulta("SELECT * FROM APP_USUARIO", function (obj) {
                                 if (obj.ACTIVO == 'A') {
+                                    masterUsuario=obj.IDUSERWEB;
                                     contentPage('pages/main.html');
                                 }
                             });
@@ -69,9 +70,9 @@
             if ($("#txt_user").val() == '') { alert("Ingresar Usuario...");  $("#txt_user").focus(); return true; }
             if ($("#txt_pass").val() == '') { alert("Ingresar Password..."); $("#txt_pass").focus(); return true; }
 
-
-            BDConsulta("SELECT COUNT(*) CONT FROM APP_USUARIO WHERE USUARIO='" + $("#txt_user").val() + "' AND PASS='" + $("#txt_pass").val() + "' ", function (obj) {
-                if (obj.CONT > 0) {
+            BDConsultaOBJ("SELECT * FROM APP_USUARIO WHERE USUARIO='" + $("#txt_user").val() + "' AND PASS='" + $("#txt_pass").val() + "' ", function (obj) {
+                if (obj.rows.length > 0) {
+                    for (var i = 0; i < obj.rows.length; i++) { var row = obj.rows.item(i);  masterUsuario=row.IDUSERWEB}
                     BDActualizacion("UPDATE APP_USUARIO SET ACTIVO='A'");
                     contentPage('pages/main.html');
                 } else {
@@ -79,7 +80,6 @@
                     $("#txt_user").focus();
                 }
             });
-
         }
 
         function LoginConciliacion(evento) {
