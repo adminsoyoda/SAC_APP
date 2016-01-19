@@ -1,5 +1,6 @@
 //Variable Global de Empresa
 var masterEmpresa = "";
+var masterUsuario = "";
 
 //Contenedor General
 function contentPage(ContenedorGlobal) {
