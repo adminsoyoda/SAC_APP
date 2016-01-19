@@ -83,8 +83,11 @@
 
     //Funcion Set Empresa
     function cambioEmpresa(newEmpresa){
+        $("#loader_sys").show();
         masterEmpresa=newEmpresa;
         $("#nameEmpresa").html(newEmpresa);
+        loadOption('10000001');
+        $("#loader_sys").hide();
     }
 
 </script>
