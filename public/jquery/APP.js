@@ -292,6 +292,26 @@ function fecActual() {
     return datetime;
 }
 
+function horaActual() {
+    var currentdate = new Date();
+   
+    var hour    = currentdate.getHours();
+    var minute = currentdate.getMinutes();
+    var second = currentdate.getSeconds();
+
+    if (String(hour).length == 1) {
+        hour = '0' + hour;
+    }
+    if (String(minute).length == 1) {
+        minute = '0' + minute;
+    }
+    if (String(second).length == 1) {
+        second = '0' + second;
+    }
+
+    var hourTime = hour + ":" + minute + ":" + second;
+    return hourTime;
+}
 //---------------------------------------------------------------------------------------------------------------------------
 //Creando Eventos
 //---------------------------------------------------------------------------------------------------------------------------
