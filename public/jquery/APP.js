@@ -363,3 +363,55 @@ function SoloNumeroEmpty(idnum){
    if($("#"+idnum).val()==''){return 0;}
    return $("#"+idnum).val();
 }
+
+
+//---------------------------------------------------------------------------------------------------------------------------
+//Metodo Multibusqueda
+//---------------------------------------------------------------------------------------------------------------------------
+function searchOdoo(ColumNames){
+       $( "#txt_search" ).autocomplete({
+           source: function (request,response){
+            response(ColumNames)
+           },  
+           multiselect: true,
+           change:function(){
+                $( "#txt_search" ).val("");
+           }       
+       });
+}
+
+//---------------------------------------------------------------------------------------------------------------------------
+//Guardar Busquedas en input temporal
+//---------------------------------------------------------------------------------------------------------------------------
+function storeSearch(){
+    var tempSearch = $("#txt_search").val();
+    $("#tempSearch").val(tempSearch);
+}
+
+//---------------------------------------------------------------------------------------------------------------------------
+//Busqueda y Carga de lista 
+//---------------------------------------------------------------------------------------------------------------------------
+function searchOdooEnter(RETORNO){
+    var searchField = document.getElementsByName("searchOdoo");
+    var searchStrTemp="";
+    var searchStr="";
+    var indice=0;
+
+    if(searchField.length != 0){
+
+        for (var i = 0; i < searchField.length ; i++) {
+            searchStrTemp = searchField[i].textContent;
+            if(indice == 0){
+                searchStrTemp = " AND ( "+searchStrTemp.replace(":", " LIKE '%")+"%' ";
+                indice++;
+            }else{
+                searchStrTemp = " AND "+searchStrTemp.replace(":", " LIKE '%")+"%' ";
+            }
+            searchStr=searchStr+searchStrTemp;
+        }
+        searchStr=searchStr+" )";
+    }
+    RETORNO(searchStr);
+}
+
+
