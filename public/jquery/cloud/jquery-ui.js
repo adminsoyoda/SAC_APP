@@ -7551,9 +7551,9 @@ $.extend( $.ui.autocomplete, {
 		return value.replace( /[\-\[\]{}()*+?.,\\\^$|#\s]/g, "\\$&" );
 	},
 	filter: function( array, term ) {
-		var matcher = new RegExp( $.ui.autocomplete.escapeRegex( term ), "i" );
+		/*var matcher = new RegExp( $.ui.autocomplete.escapeRegex( term ), "i" );
 		return $.grep( array, function( value ) {
-			return matcher.test( value.label || value.value || value );
+			return matcher.test( value.label || value.value || value );*/
 		});
 	}
 });
