@@ -27,7 +27,7 @@ $.widget("ui.autocomplete", $.ui.autocomplete, {
             function autoSize(e){
                 // Hackish autosizing
                 var $this = $(this);
-                $this.width(1).width(this.scrollWidth+fontSize-1);
+                //$this.width(1).width(this.scrollWidth+fontSize-1);
             };
 
             var kc = $.ui.keyCode;
