@@ -135,7 +135,7 @@ function searchList() {
 //---------------------------------------------------------------------------------------------------------------------------
 //Pagineo Derecha
 //---------------------------------------------------------------------------------------------------------------------------
-function searchListPagDerecha() {
+function searchListPagDerecha_() {
     var dataPost = {
         txt_search: $("#txt_search").val(),
         var_PaginaActual: parseInt($("#hdn_pagina").val()) + 1
@@ -148,7 +148,7 @@ function searchListPagDerecha() {
 //---------------------------------------------------------------------------------------------------------------------------
 //Pagineo Izquierda
 //---------------------------------------------------------------------------------------------------------------------------
-function searchListPagIzquierda() {
+function searchListPagIzquierda_() {
     var dataPost = {
         txt_search: $("#txt_search").val(),
         var_PaginaActual: parseInt($("#hdn_pagina").val()) - 1
