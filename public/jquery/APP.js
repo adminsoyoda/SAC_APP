@@ -414,4 +414,17 @@ function searchOdooEnter(RETORNO){
     RETORNO(searchStr);
 }
 
+function startCursor(obj){
+    $("#"+obj).focus(function() {
+        setTimeout((function(el) {
+            var strLength = el.value.length;
+            return function() {
+                if(el.setSelectionRange !== undefined) {
+                    el.setSelectionRange(strLength, strLength);
+                } else {
+                    $(el).val(el.value);
+                }
+        }}(this)), 0);
+    });
+}
 
