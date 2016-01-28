@@ -368,14 +368,14 @@ function SoloNumeroEmpty(idnum){
 //---------------------------------------------------------------------------------------------------------------------------
 //Metodo Multibusqueda
 //---------------------------------------------------------------------------------------------------------------------------
-function searchOdoo(ColumNames){
-       $( "#txt_search" ).autocomplete({
+function searchOdoo(ColumNames,ItemSearch){
+       $( "#"+ItemSearch ).autocomplete({
            source: function (request,response){
             response(ColumNames)
            },  
            multiselect: true,
            change:function(){
-                $( "#txt_search" ).val("");
+                $( "#"+ItemSearch ).val("");
            }       
        });
 }
@@ -383,9 +383,9 @@ function searchOdoo(ColumNames){
 //---------------------------------------------------------------------------------------------------------------------------
 //Guardar Busquedas en input temporal
 //---------------------------------------------------------------------------------------------------------------------------
-function storeSearch(){
-    var tempSearch = $("#txt_search").val();
-    $("#tempSearch").val(tempSearch);
+function storeSearch(ItemStore){
+    var tempSearch = $("#"+ItemStore).val();
+    $("#"+ItemStore).val(tempSearch);
 }
 
 //---------------------------------------------------------------------------------------------------------------------------
