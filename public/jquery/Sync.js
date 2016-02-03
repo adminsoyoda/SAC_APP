@@ -160,26 +160,29 @@ function SyncAppWebAll(TableSelect, TableAction, ConditionAction, Actions, Type,
             }
 
             dataPost={     
-		        STRACTION:strAction
-		    }
-		    AjaxSAC(syncServer+'/SyncAppWebExe', dataPost, true, function (callback) {
-		        if(alerta){
-		        	alert(callback);
-		    	}
-		    });
+	        STRACTION:strAction,
+	        TIPO:Type
+	    }
+	    AjaxSAC(syncServer+'/SyncAppWebExe', dataPost, true, function (callback) {
+	        if(alerta){
+	            alert(callback);
+	    	}
+	    });
         });
     }else{
-    	AjaxSAC(syncServer+'/SyncAppWebExe', '', true, function (callback) {
-    		
-    		if(alerta){
+    	dataPost={    
+    	     STRACTION:"",
+	     TIPO:Type
+	}
+    	AjaxSAC(syncServer+'/SyncAppWebExe', dataPost, true, function (callback) {
+	    	if(alerta){
 		       	alert(callback);
-		    }
-	        
+		}
 	        var regColum = callback.split("|");
-            for (var i = 0; i < regColum.length; i++)
-            {
-            	BDActualizacion(regColum[i]);
-            }
-		});
+		for (var i = 0; i < regColum.length; i++)
+		{
+		    BDActualizacion(regColum[i]);
+		}
+    	});
     }
 }
