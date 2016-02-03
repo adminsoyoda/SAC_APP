@@ -136,10 +136,10 @@ function SyncExeSendInfo(sqlCommand,table,loader) {
 }
 
 
-function SyncAppWebAll(TableSelect, ConditionSelect, TableAction, ConditionAction, Actions, Type, detailColum,alerta){
+function SyncAppWebAll(TableSelect, TableAction, ConditionAction, Actions, Type, detailColum,alerta){
     var strAction="";
     if(Type=="APP"){
-        BDConsultaOBJ(" SELECT * FROM "+TableSelect + ConditionSelect , function (obj){    
+        BDConsultaOBJ( TableSelect , function (obj){    
             for (var i = 0; i < obj.rows.length; i++) {        
                 var row = obj.rows.item(i);     
                 
