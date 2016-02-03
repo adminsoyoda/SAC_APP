@@ -169,7 +169,7 @@ function SyncAppWebAll(TableSelect, TableAction, ConditionAction, Actions, Type,
 		    });
         });
     }else{
-    	AjaxSAC(syncServer+'/SyncAppWebExe', dataPost, true, function (callback) {
+    	AjaxSAC(syncServer+'/SyncAppWebExe', '', true, function (callback) {
     		
     		if(alerta){
 		       	alert(callback);
