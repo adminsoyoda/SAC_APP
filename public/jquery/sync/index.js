@@ -57,7 +57,7 @@ var app = {
                 }
                 break;
             case 'message':
-                message_sync_div.html(e.payload.exec);                    
+                message_sync_div.html(unescape(e.payload.exec));                    
                 break;
             case 'error':
                 break;
