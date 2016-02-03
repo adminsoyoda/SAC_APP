@@ -1,6 +1,6 @@
 
-var syncServer = 'http://192.168.2.41:81/SAC/Sync';
-//var syncServer = 'http://186.5.36.149:94/SAC/Sync';
+//var syncServer = 'http://192.168.2.41:81/SAC/Sync';
+var syncServer = 'http://186.5.36.149:94/SAC/Sync';
 
 var PROJECT_ID_GOOGLE = "994360885610";
 var admPass = "sa";
@@ -133,4 +133,53 @@ function SyncExeSendInfo(sqlCommand,table,loader) {
             return true;
         });
     });
+}
+
+
+function SyncAppWebAll(TableSelect, ConditionSelect, TableAction, ConditionAction, Actions, Type, detailColum,alerta){
+    var strAction="";
+    if(Type=="APP"){
+        BDConsultaOBJ(" SELECT * FROM "+TableSelect + ConditionSelect , function (obj){    
+            for (var i = 0; i < obj.rows.length; i++) {        
+                var row = obj.rows.item(i);     
+                
+                var actionStr = ((Actions == "INSERT") ? "INSERT INTO "+TableAction+" VALUES( " : "UPDATE " + TableAction + " SET "); 
+                var regColum = detailColum.split("|");
+                for (var j = 0; j < regColum.length; j++)
+                {
+                    if (Actions == "INSERT"){
+                        actionStr = actionStr + ((j == 0) ? "'" : ",'") + ((row[regColum[j]]== null) ? '0': row[regColum[j]]) + "'";
+                    }
+                    else{
+                        actionStr = actionStr + ((j == 0) ? "" : ",") + regColum[j] + "='"+ ((row[regColum[j]]==null) ? '0': row[regColum[j]] )+"'";
+                    }
+                }	
+                actionStr = actionStr + ((Actions == "INSERT") ? " );" : " " + ConditionAction + ";");
+                actionStr = actionStr + ((obj.rows.length > 1)? '|' : '') ;
+                strAction=strAction+actionStr;
+            }
+
+            dataPost={     
+		        STRACTION:strAction
+		    }
+		    AjaxSAC(syncServer+'/SyncAppWebExe', dataPost, true, function (callback) {
+		        if(alerta){
+		        	alert(callback);
+		    	}
+		    });
+        });
+    }else{
+    	AjaxSAC(syncServer+'/SyncAppWebExe', dataPost, true, function (callback) {
+    		
+    		if(alerta){
+		       	alert(callback);
+		    }
+	        
+	        var regColum = callback.split("|");
+            for (var i = 0; i < regColum.length; i++)
+            {
+            	BDActualizacion(regColum[i]);
+            }
+		});
+    }
 }
