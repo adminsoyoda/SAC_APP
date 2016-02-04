@@ -136,25 +136,25 @@ function SyncExeSendInfo(sqlCommand,table,loader) {
 }
 
 
-function SyncAppWebAll(TableSelect, TableAction, ConditionAction, Actions, Type, detailColum,alerta){
+function SyncAppWebAll(TableSelect, TableAction, TableFinAction, ColumType, Type, detailColum,alerta){
     var strAction="";
     if(Type=="APP"){
         BDConsultaOBJ( TableSelect , function (obj){    
             for (var i = 0; i < obj.rows.length; i++) {        
                 var row = obj.rows.item(i);     
                 
-                var actionStr = ((Actions == "INSERT") ? "INSERT INTO "+TableAction+" VALUES( " : "UPDATE " + TableAction + " SET "); 
+                var actionStr = TableAction ; 
                 var regColum = detailColum.split("|");
                 for (var j = 0; j < regColum.length; j++)
                 {
-                    if (Actions == "INSERT"){
+                    if (ColumType == "LIST"){
                         actionStr = actionStr + ((j == 0) ? "'" : ",'") + ((row[regColum[j]]== null) ? '0': row[regColum[j]]) + "'";
                     }
                     else{
                         actionStr = actionStr + ((j == 0) ? "" : ",") + regColum[j] + "='"+ ((row[regColum[j]]==null) ? '0': row[regColum[j]] )+"'";
                     }
                 }	
-                actionStr = actionStr + ((Actions == "INSERT") ? " );" : " " + ConditionAction + ";");
+                actionStr = actionStr + TableFinAction ;
                 actionStr = actionStr + ((obj.rows.length > 1)? '|' : '') ;
                 strAction=strAction+actionStr;
             }
@@ -162,7 +162,7 @@ function SyncAppWebAll(TableSelect, TableAction, ConditionAction, Actions, Type,
             dataPost={     
 	        STRACTION:strAction,
 	        TIPO:Type
-	    }
+    	    }
 	    AjaxSAC(syncServer+'/SyncAppWebExe', dataPost, true, function (callback) {
 	        if(alerta){
 	            alert(callback);
@@ -171,14 +171,14 @@ function SyncAppWebAll(TableSelect, TableAction, ConditionAction, Actions, Type,
         });
     }else{
     	dataPost={    
-    	     STRACTION:"",
-	     TIPO:Type
+    	    STRACTION:"",
+	    TIPO:Type
 	}
     	AjaxSAC(syncServer+'/SyncAppWebExe', dataPost, true, function (callback) {
-	    	if(alerta){
-		       	alert(callback);
+    		if(alerta){
+	       		alert(callback);
 		}
-	        var regColum = callback.split("|");
+    		var regColum = callback.split("|");
 		for (var i = 0; i < regColum.length; i++)
 		{
 		    BDActualizacion(regColum[i]);
