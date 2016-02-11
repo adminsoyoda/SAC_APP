@@ -1,6 +1,6 @@
 
-//var syncServer = 'http://192.168.2.41:81/SAC/Sync';
-var syncServer = 'http://186.5.36.149:94/SAC/Sync';
+var syncServer = 'http://192.168.2.41:81/SAC/Sync';
+//var syncServer = 'http://186.5.36.149:94/SAC/Sync';
 
 var PROJECT_ID_GOOGLE = "994360885610";
 var admPass = "sa";
@@ -91,8 +91,6 @@ function SyncProcess(loader) {
     var CODIGOINTERNO = '';
     var FECHAANT = '';
     
-    if (loader) { $("#loader_sys").show(); }
-
     BDConsultaOBJ("SELECT * FROM APP_USUARIO;", function (obj) {
         for (var i = 0; i < obj.rows.length; i++) {
             var row = obj.rows.item(i);
@@ -105,9 +103,8 @@ function SyncProcess(loader) {
             LOADER:loader
         };
 
-        AjaxSAC(syncServer + "/SyncExe", dataPost, true, function (callback) {
+        AjaxSAC(syncServer + "/SyncExe", dataPost, loader, function (callback) {
             $("#sync_sys").html(callback);
-            $("#loader_sys").hide();
             return true;
         });
     });
@@ -126,7 +123,7 @@ function SyncExeSendInfo(sqlCommand,table,loader) {
             OBJECTDATA: objString,
             TABLE: table
         };
-        AjaxSAC(syncServer + "/SyncDeviceInfo"+table, dataPost, true, function (callback) {
+        AjaxSAC(syncServer + "/SyncDeviceInfo"+table, dataPost, loader, function (callback) {
             if (loader) {
                 alerta(callback);
             }
@@ -136,7 +133,7 @@ function SyncExeSendInfo(sqlCommand,table,loader) {
 }
 
 
-function SyncAppWebAll(TableSelect, TableAction, TableFinAction, ColumType, Type, detailColum,alerta){
+function SyncAppWebAll(TableSelect, TableAction, TableFinAction, ColumType, Type, detailColum,alerta,loader){
     var strAction="";
     if(Type=="APP"){
         BDConsultaOBJ( TableSelect , function (obj){    
@@ -153,36 +150,36 @@ function SyncAppWebAll(TableSelect, TableAction, TableFinAction, ColumType, Type
                     else{
                         actionStr = actionStr + ((j == 0) ? "" : ",") + regColum[j] + "='"+ ((row[regColum[j]]==null) ? '0': row[regColum[j]] )+"'";
                     }
-                }	
+                }   
                 actionStr = actionStr + TableFinAction ;
                 actionStr = actionStr + ((obj.rows.length > 1)? '|' : '') ;
                 strAction=strAction+actionStr;
             }
 
             dataPost={     
-	        STRACTION:strAction,
-	        TIPO:Type
-    	    }
-	    AjaxSAC(syncServer+'/SyncAppWebExe', dataPost, true, function (callback) {
-	        if(alerta){
-	            alert(callback);
-	    	}
-	    });
+            STRACTION:strAction,
+            TIPO:Type
+            }
+        AjaxSAC(syncServer+'/SyncAppWebExe', dataPost, loader, function (callback) {
+            if(alerta){
+                alert(callback);
+            }
+        });
         });
     }else{
-    	dataPost={    
-    	    STRACTION:"",
-	    TIPO:Type
-	}
-    	AjaxSAC(syncServer+'/SyncAppWebExe', dataPost, true, function (callback) {
-    		if(alerta){
-	       		alert(callback);
-		}
-    		var regColum = callback.split("|");
-		for (var i = 0; i < regColum.length; i++)
-		{
-		    BDActualizacion(regColum[i]);
-		}
-    	});
+        dataPost={    
+            STRACTION:"",
+        TIPO:Type
+    }
+        AjaxSAC(syncServer+'/SyncAppWebExe', dataPost, loader, function (callback) {
+            if(alerta){
+                alert(callback);
+        }
+            var regColum = callback.split("|");
+        for (var i = 0; i < regColum.length; i++)
+        {
+            BDActualizacion(regColum[i]);
+        }
+        });
     }
 }
