@@ -1,4 +1,4 @@
-﻿<link rel="stylesheet" href="public/html/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="public/html/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="public/css/font-awesome-4.5.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="public/css/ionicons-2.0.1/css/ionicons.min.css">
 
@@ -62,17 +62,11 @@
             }
         });
 
-        //Menu Empresa de Usuario
         BDConsultaOBJ("SELECT * FROM APP_EMPRESA;", function (obj) {
             for (var i = 0; i < obj.rows.length; i++) {
                 var row = obj.rows.item(i);
                 if(i==0){
                     masterEmpresa=row.RAZONSOCIAL
-                    $("#nameEmpresa").html(row.RAZONSOCIAL);
-                    $("#listEmp").append("<li><a href='#' onclick='cambioEmpresa(\"" + row.RAZONSOCIAL + "\")'><i class='fa fa-users text-aqua'></i> " + row.RAZONSOCIAL + "</a></li>");
-                    
-                 }else{
-                     $("#listEmp").append("<li><a href='#' onclick='cambioEmpresa(\"" + row.RAZONSOCIAL + "\")'><i class='fa fa-users text-aqua'></i> " + row.RAZONSOCIAL + "</a></li>");
                  }
             }
         });
@@ -82,19 +76,11 @@
     });
 
     function CerrarSesion() {
-        BDActualizacion("UPDATE APP_USUARIO SET ACTIVO='I'");
-        contentPage('pages/login.html');
-    }
-
-    //Funcion Set Empresa
-    function cambioEmpresa(newEmpresa){
-        $("#loader_sys").show();
-        if(masterEmpresa!=newEmpresa){
-            masterEmpresa=newEmpresa;
-            $("#nameEmpresa").html(newEmpresa);
-            loadOption('10000001');
+        var res = confirm("¿Seguro desea Cerrar Sesion?")
+        if(res==true){
+            BDActualizacion("UPDATE APP_USUARIO SET ACTIVO='I'");
+            contentPage('pages/login.html');
         }
-        $("#loader_sys").hide();
     }
 
 </script>
@@ -108,107 +94,27 @@
     </a>
 
     <nav class="navbar navbar-static-top" role="navigation">
-        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button" id="AppMenuIzqButton">
             <span class="sr-only"></span>
         </a>
         <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-            
-            <li class="dropdown notifications-menu open">
-                <a aria-expanded="true" href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-circle"></i>
-                  <span class="label label-warning" id="nameEmpresa"></span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li class="header">Ud Tiene Acceso a las siguientes Empresas</li>
-                  <li>
-                    <!-- inner menu: contains the actual data -->
-                    <div style="position: relative; overflow: hidden; width: auto; height: 200px;" class="slimScrollDiv">
-                    <ul style="overflow: hidden; width: 100%; height: 200px;" class="menu" id="listEmp">
-
-                    </ul>
-                    <div style="background: rgb(0, 0, 0) none repeat scroll 0% 0%; width: 3px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 195.122px;" class="slimScrollBar"></div><div style="width: 3px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51) none repeat scroll 0% 0%; opacity: 0.2; z-index: 90; right: 1px;" class="slimScrollRail"></div></div>
-                  </li>
-                  <li class="footer"><a href="#"></a></li>
-                </ul>
-            </li>
-            
             <li class="dropdown notifications-menu" onclick="SyncProcess(true);">
                 <a aria-expanded="true" href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <i class="fa fa-refresh"></i>
                 </a>
             </li>
-            
-            <!--
-            <li class="dropdown notifications-menu">
+            <li class="dropdown user user-menu" onclick='CerrarSesion();'>
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-bell-o"></i>
-                <span class="label label-warning">10</span>
+                <i class="fa fa-power-off"></i>
             </a>
-            <ul class="dropdown-menu">
-                <li class="header">You have 10 notifications</li>
-                <li>
-                <ul class="menu">
-                    <li>
-                    <a href="#">
-                        <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                    </a>
-                    </li>
-                    <li>
-                    <a href="#">
-                        <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the page and may cause design problems
-                    </a>
-                    </li>
-                    <li>
-                    <a href="#">
-                        <i class="fa fa-users text-red"></i> 5 new members joined
-                    </a>
-                    </li>
-                    <li>
-                    <a href="#">
-                        <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-                    </a>
-                    </li>
-                    <li>
-                    <a href="#">
-                        <i class="fa fa-user text-red"></i> You changed your username
-                    </a>
-                    </li>
-                </ul>
-                </li>
-                <li class="footer"><a href="#">View all</a></li>
-            </ul>
-            </li>
--->
-            <!-- User Account: style can be found in dropdown.less -->
-            <li class="dropdown user user-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <img src="public/images/users/0000.jpg" class="user-image" alt="User Image">
-                <span id="AppGestorName_Top" class="hidden-xs"></span>
-            </a>
-            <ul class="dropdown-menu">
-                <!-- User image -->
-                <li class="user-header">
-                <img src="public/images/users/0000.jpg" class="img-circle" alt="User Image">
-                <p>
-                    <span id='AppGestorName_Logout'>...</span>
-                    <small id='AppGestorFechaActuali_Logout'>...</small>
-                </p>
-                </li>
-                <!-- Menu Footer-->
-                <li class="user-footer">                    
-                <div class="pull-right">
-                    <a href="#" class="btn btn-default btn-flat" onclick='CerrarSesion();'>Cerrar Sesion</a>
-                </div>
-                </li>
-            </ul>
             </li>
         </ul>
         </div>
     </nav>
     </header>
 
-    <aside class="main-sidebar">
+    <aside class="main-sidebar" id="AppMenuIzq">
         <section class="sidebar">
             <div class="user-panel">
                 <div class="pull-left image">
@@ -216,7 +122,6 @@
                 </div>
                 <div class="pull-left info">
                     <p id='AppGestorName_Menu'>...</p>
-                    <a href="#"><i class="fa fa-circle text-success"></i> Disponible</a>
                 </div>
             </div>
             <ul class="sidebar-menu" id="AppGestorOption">
