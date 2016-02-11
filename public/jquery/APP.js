@@ -1,4 +1,4 @@
-//Variable Global de Empresa
+//Variable Global de Empresa y Usuario
 var masterEmpresa = "";
 var masterUsuario = "";
 
@@ -69,6 +69,7 @@ function alerta(alert_mensaje) {
     $("#alert_mensaje").html(alert_mensaje);
     setTimeout(function () {$("#alert_button").focus();}, 100);
 }
+
 
 //---------------------------------------------------------------------------------------------------------------------------
 //Alertas de Sistema - Cerrar
@@ -365,6 +366,8 @@ function SoloNumeroEmpty(idnum){
 }
 
 
+//------------------------------Modificar------------------------------------------
+//
 //---------------------------------------------------------------------------------------------------------------------------
 //Metodo Multibusqueda
 //---------------------------------------------------------------------------------------------------------------------------
@@ -427,4 +430,17 @@ function startCursor(obj){
         }}(this)), 0);
     });
 }
+
+function masterTableComparer(tableCondition,insertCondition){
+    BDConsulta("SELECT COUNT(*) AS 'CONT' FROM "+tableCondition , function (objIni) { 
+        Count = objIni.CONT;
+        if(Count>0){
+            BDActualizacion("DELETE FROM "+tableCondition);
+            BDActualizacion(insertCondition);
+        }else{
+            BDActualizacion(insertCondition);
+        }
+    });
+}
+
 
