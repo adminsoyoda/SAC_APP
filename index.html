@@ -26,17 +26,9 @@
            contentPage('pages/login.html');             
            app.onDeviceReady();      
            
-           document.addEventListener("backbutton", onBackKeyDown);
+           
 	
         });
-        
-        function onBackKeyDown(){
-            navigator.notification.confirm('¿Salir de la aplicación?',function(button) {
-              if (button == 2) {
-                navigator.app.exitApp();
-              }
-            },'Salir', 'No,Si');return false;
-        } 
         
         function getCoordenatesGPS(){
            
