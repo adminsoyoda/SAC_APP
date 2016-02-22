@@ -10,6 +10,20 @@ var DATABASE_DESCRIPTION="SAC Gestion Ventas Soyoda";
 var DATABASE_SIZE=200000;
 
 //-------------------------------------------------------------------------------------------------
+//VARIABLES DE SINCRONIZACION
+
+var index = 0;
+var strAction="";
+var strType="";
+var regTable = [];
+var regTableColum = [];
+var regTableAction = [];
+var regTableFinAction = [];
+var regColumType = [];
+var regFieldsUpdate = [];
+var regFieldExist = [];
+
+//-------------------------------------------------------------------------------------------------
 //FUNCIONES BASE DE DATOS
 function errorCB(err) { alert("Error processing SQL: " + err.code + " - " + err.name); }
 function successCB() { }
@@ -133,53 +147,87 @@ function SyncExeSendInfo(sqlCommand,table,loader) {
 }
 
 
-function SyncAppWebAll(TableSelect, TableAction, TableFinAction, ColumType, Type, detailColum,alerta,loader){
-    var strAction="";
-    if(Type=="APP"){
-        BDConsultaOBJ( TableSelect , function (obj){    
-            for (var i = 0; i < obj.rows.length; i++) {        
-                var row = obj.rows.item(i);     
-                
-                var actionStr = TableAction ; 
-                var regColum = detailColum.split("|");
-                for (var j = 0; j < regColum.length; j++)
-                {
-                    if (ColumType == "LIST"){
-                        actionStr = actionStr + ((j == 0) ? "'" : ",'") + ((row[regColum[j]]== null) ? '0': row[regColum[j]]) + "'";
-                    }
-                    else{
-                        actionStr = actionStr + ((j == 0) ? "" : ",") + regColum[j] + "='"+ ((row[regColum[j]]==null) ? '0': row[regColum[j]] )+"'";
-                    }
-                }   
-                actionStr = actionStr + TableFinAction ;
-                actionStr = actionStr + ((obj.rows.length > 1)? '|' : '') ;
-                strAction=strAction+actionStr;
-            }
+function SyncApp_Web(TableSelect, TableAction, TableFinAction, ColumType, detailColum,FieldsUpdate,FielsdExist,alerta,loader){
+    index=0;
+    strAction="";
+	regTable = TableSelect.split("@@");
+	regTableColum = detailColum.split("@@");
+	regTableAction = TableAction.split("@@");
+	regTableFinAction = TableFinAction.split("@@");
+	regColumType = ColumType.split("@@");
+	regFieldsUpdate = FieldsUpdate.split("@@");
+	regFieldExist = FielsdExist.split("@@");  
 
-            dataPost={     
-            STRACTION:strAction,
-            TIPO:Type
-            }
+    SyncAppWebExec(alerta,loader);
+}
+
+function SyncAppWebExec(alerta,loader){
+    if(index < regTable.length){
+	    BDConsultaOBJ( regTable[index] , function (obj){    
+	        for (var j = 0; j < obj.rows.length; j++) {        
+	            var row = obj.rows.item(j);
+
+	            var actionStr = ((index > 0)? ((j==0)?'|':'') : '')+regTableAction[index] ;
+	            var regColum = regTableColum[index].split("|");
+	            for (var k = 0; k < regColum.length; k++)
+	            {
+	                if (regColumType[index] == "IN"){
+	                    actionStr = actionStr + ((k == 0) ? "'" : ",'") + ((row[regColum[k]]== null) ? '0': row[regColum[k]]) + "'";
+	                }
+	                else{
+	                    actionStr = actionStr + ((k == 0) ? "" : ",") + regColum[k] + "='"+ ((row[regColum[k]]==null) ? '0': row[regColum[k]] )+"'";
+	                }
+	            }
+	            
+	            actionStr = actionStr + regTableFinAction[index] 
+				
+				var regFieldExistItems = regFieldExist[index].split("|");
+	            for (var m = 0; m < regFieldExistItems.length; m++)
+	            {
+	            	if(m==0){
+	            		actionStr = actionStr + regFieldExistItems[m];
+	            	}else{
+	            		actionStr = actionStr + ((m == 1) ? " " : " AND ") +regFieldExistItems[m]+ " ='"+ row[regFieldExistItems[m]] +"'";
+	            	}
+	                
+	            }
+	            var regFieldsUpdateAll= regFieldsUpdate[index].split("&");
+	            var regFieldsUpdateItems = regFieldsUpdateAll[0].split("|");
+	            for (var l = 0; l < regFieldsUpdateItems.length; l++)
+	            {
+	            	if(l==0){
+	            		actionStr = actionStr + regFieldsUpdateItems[l];
+	            	}else{
+	                	actionStr = actionStr + ((l == 1) ? "" : " AND ") +regFieldsUpdateItems[l] + "='"+ row[regFieldsUpdateItems[l]] +"'";
+	            	}
+	            }
+
+	            actionStr = actionStr + "}" +regFieldsUpdateAll[1]
+
+	            actionStr = ((j > 0)? '|' : '') + actionStr  ;
+	            strType = strType+((index>0)? '|' : ((j > 0)?'|':'')) + regColumType[index];
+	            strAction=strAction+actionStr;
+	        }
+	        index++;
+	        SyncAppWebExec(alerta,loader);
+	    });
+	}else{
+		dataPost={     
+            STRACTION : strAction,
+            TYPE : strType,
+            IDGOOGLE : registerId,
+            USR : masterUsuario
+        }
         AjaxSAC(syncServer+'/SyncAppWebExe', dataPost, loader, function (callback) {
             if(alerta){
                 alert(callback);
             }
+            var regcallback = callback.split("|");
+            regcallback = regcallback.filter(Boolean)
+            for (var i = 0; i < regcallback.length; i++)
+            {
+                BDActualizacion(regcallback[i]);
+            }
         });
-        });
-    }else{
-        dataPost={    
-            STRACTION:"",
-        TIPO:Type
-    }
-        AjaxSAC(syncServer+'/SyncAppWebExe', dataPost, loader, function (callback) {
-            if(alerta){
-                alert(callback);
-        }
-            var regColum = callback.split("|");
-        for (var i = 0; i < regColum.length; i++)
-        {
-            BDActualizacion(regColum[i]);
-        }
-        });
-    }
+	}
 }
