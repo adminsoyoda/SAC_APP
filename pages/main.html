@@ -75,6 +75,16 @@
         loadOption('10000001');
     });
 
+    document.addEventListener("backbutton", onBackKeyDown);
+    
+    function onBackKeyDown(){
+        navigator.notification.confirm('¿Salir de la aplicación?',function(button) {
+          if (button == 2) {
+            navigator.app.exitApp();
+          }
+        },'Salir', 'No,Si');return false;
+    } 
+    
     function CerrarSesion() {
         var res = confirm("¿Seguro desea Cerrar Sesion?")
         if(res==true){
