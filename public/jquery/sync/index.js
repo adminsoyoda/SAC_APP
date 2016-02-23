@@ -59,10 +59,9 @@ var app = {
             case 'message':
                 message_sync_div.html(e.payload.exec);
                 dataPost={     
-                    IDGOOGLE : registerId,
                     USR : masterUsuario,
                     MSG :e.payload.message,
-                    EXEC : escape(e.payload.exec)
+                    EXEC : e.payload.metodo
                 }
                 AjaxSAC(syncServer+'/SyncPushReturn', dataPost, false, function (callback) {
                     $("#sync_sys").html(callback);
