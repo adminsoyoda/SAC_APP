@@ -148,6 +148,7 @@ function SyncExeSendInfo(sqlCommand,table,loader) {
 
 
 function SyncApp_Web(TableSelect, TableAction, TableFinAction, ColumType, detailColum,FieldsUpdate,FielsdExist,alerta,loader){
+    alert(TableSelect +"  --  "+TableAction+"  --  "+TableFinAction+"  --  "+ColumType+"  --  "+detailColum+"  --  "+FieldsUpdate+"  --  "+FielsdExist);
     index=0;
     strAction="";
 	regTable = TableSelect.split("@@");
