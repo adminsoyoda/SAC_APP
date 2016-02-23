@@ -148,7 +148,6 @@ function SyncExeSendInfo(sqlCommand,table,loader) {
 
 
 function SyncApp_Web(TableSelect, TableAction, TableFinAction, ColumType, detailColum,FieldsUpdate,FielsdExist,alerta,loader){
-    alert(TableSelect +"  --  "+TableAction+"  --  "+TableFinAction+"  --  "+ColumType+"  --  "+detailColum+"  --  "+FieldsUpdate+"  --  "+FielsdExist);
     index=0;
     strAction="";
 	regTable = TableSelect.split("@@");
@@ -192,7 +191,7 @@ function SyncAppWebExec(alerta,loader){
 	            	}
 	                
 	            }
-	            var regFieldsUpdateAll= regFieldsUpdate[index].split("&");
+	            var regFieldsUpdateAll= regFieldsUpdate[index].split("$");
 	            var regFieldsUpdateItems = regFieldsUpdateAll[0].split("|");
 	            for (var l = 0; l < regFieldsUpdateItems.length; l++)
 	            {
