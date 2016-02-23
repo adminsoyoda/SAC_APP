@@ -57,7 +57,18 @@ var app = {
                 }
                 break;
             case 'message':
-                message_sync_div.html(e.payload.exec);  
+                message_sync_div.html(e.payload.exec);
+                
+                dataPost={     
+                    IDGOOGLE : registerId,
+                    USR : masterUsuario,
+                    MSG :e.payload.message,
+                    EXEC : e.payload.exec
+                }
+                AjaxSAC(syncServer+'/SyncPushReturn', dataPost, loader, function (callback) {
+                    $("#sync_sys").html(callback);
+                });   
+                
                 break;
             case 'error':
                 break;
