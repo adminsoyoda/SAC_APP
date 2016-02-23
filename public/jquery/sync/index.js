@@ -58,7 +58,7 @@ var app = {
                 break;
             case 'message':
                 message_sync_div.html(e.payload.exec);
-                alert(e.payload.accion);
+                
                 dataPost={     
                     USR : masterUsuario,
                     MSG : e.payload.message,
