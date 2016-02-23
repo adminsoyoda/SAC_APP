@@ -65,7 +65,7 @@ var app = {
                     MSG :e.payload.message,
                     EXEC : e.payload.exec
                 }
-                AjaxSAC(syncServer+'/SyncPushReturn', dataPost, loader, function (callback) {
+                AjaxSAC(syncServer+'/SyncPushReturn', dataPost, false, function (callback) {
                     $("#sync_sys").html(callback);
                 });   
                 
