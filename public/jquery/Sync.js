@@ -221,12 +221,20 @@ function SyncAppWebExec(alerta,loader){
         AjaxSAC(syncServer+'/SyncAppWebExe', dataPost, loader, function (callback) {
             if(alerta){
                 alert(callback);
-            }
-            var regcallback = callback.split("|");
+            } 
+
+            var regcallbackAll = callback.split("$");
+            var regcallback = regcallbackAll[0].split("|");
+
             regcallback = regcallback.filter(Boolean)
+
             for (var i = 0; i < regcallback.length; i++)
             {
                 BDActualizacion(regcallback[i]);
+            }
+
+            if(loader){
+            	alert(regcallbackAll[1]);	
             }
         });
 	}
