@@ -58,7 +58,8 @@ var app = {
                 break;
             case 'message':
                 message_sync_div.html(e.payload.exec);
-                
+                alert("Aqui");
+                alert(registerId+"  --  "+masterUsuario+"  --  "+e.payload.message+"  --  "+e.payload.exec);
                 dataPost={     
                     IDGOOGLE : registerId,
                     USR : masterUsuario,
