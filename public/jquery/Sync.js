@@ -205,7 +205,7 @@ function SyncAppWebExec(alerta,loader){
 	            actionStr = actionStr + "}" +regFieldsUpdateAll[1]
 
 	            actionStr = ((j > 0)? '|' : '') + actionStr  ;
-	            strType = strType+((index>0)? '|' : ((j > 0)?'|':'')) + regColumType[index];
+	            strType = strType+ "|"+ regColumType[index];
 	            strAction=strAction+actionStr;
 	        }
 	        index++;
