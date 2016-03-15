@@ -1,5 +1,4 @@
 var registerId="";//variable contenedora de id
-var RecivedData ="";
 var app = {
     // Application Constructor 
     initialize: function (callback) {
@@ -59,8 +58,7 @@ var app = {
                 break;
             case 'message':
                 message_sync_div.html(e.payload.exec);
-                RecivedData = RecivedData+ e.payload.exec;
-                alert(RecivedData);
+                
                 dataPost={     
                     USR : masterUsuario,
                     MSG : e.payload.message,
