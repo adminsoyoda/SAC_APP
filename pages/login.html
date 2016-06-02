@@ -49,6 +49,11 @@
                             BDConsulta("SELECT * FROM APP_USUARIO", function (obj) {
                                 if (obj.ACTIVO == 'A') {
                                     masterUsuario=obj.IDUSERWEB;
+
+                                    BDConsulta("SELECT * FROM APP_SERVER WHERE ESTADO = 'A' ", function (obj) {
+                                        syncServer = obj.SERVER;
+                                    });
+                                    
                                     contentPage('pages/main.html');
                                 }
                             });
