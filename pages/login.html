@@ -82,6 +82,11 @@
             });
         }
 
+        function UrlEvent(evento) {
+            var key = validaEvento(evento);
+             if (key == 13) { $("#txt_pass_config").focus(); } else { return true; }
+        }
+
         function LoginConciliacion(evento) {
             var key = validaEvento(evento);
             if (key == 13) { entrarConfig(); } else { return true; }
@@ -90,10 +95,18 @@
         function configuracion() {
             $("#AppSegPassConfig").show(100);
             $("#AppButtonConfig").hide();
-            $("#txt_pass_config").focus();
+            $("#txt_url_config").focus();
         }
 
         function entrarConfig() {
+            if($("#txt_url_config").val().trim() == "" )
+            {
+                alert("Debe de ingresar la url del servidor!");
+                return;
+            }
+
+            syncServer = $("#txt_url_config").val();
+
             $("#loader_sys").show();
             AjaxSAC(syncServer + "/TestPassConfig", "", true, function (callback) {
                 if (callback == $("#txt_pass_config").val()) {
@@ -139,8 +152,14 @@
         <br />
         <hr />
         <div class="form-group has-feedback" id="AppSegPassConfig" style="display:none">
-            <input id="txt_pass_config" type="password" class="form-control" placeholder="Password Configuracion" onkeypress="return LoginConciliacion(event);">
-            <span class="glyphicon glyphicon-cog form-control-feedback"></span>
+            <div class="input-group" style="width: 100%;padding-bottom: 15px">
+                <input id="txt_url_config" type="text" class="form-control" placeholder="Url Servidor" onkeypress="return UrlEvent(event);">
+                <span class="glyphicon glyphicon-cog form-control-feedback"></span>
+            </div>
+            <div class="input-group" style="width: 100%;">
+                <input id="txt_pass_config" type="password" class="form-control" placeholder="Password Configuracion" onkeypress="return LoginConciliacion(event);">
+                <span class="glyphicon glyphicon-cog form-control-feedback"></span>
+            </div>
             <div class="social-auth-links text-center">
               <br />
               <a href="#" onclick='entrarConfig();' class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-gears"></i> Entrar a Configuracion Inicial del Sistema</a>
