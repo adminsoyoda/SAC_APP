@@ -53,7 +53,7 @@
                                     BDConsulta("SELECT * FROM APP_SERVER WHERE ESTADO = 'A' ", function (obj) {
                                         syncServer = obj.SERVER;
                                     });
-                                    
+
                                     contentPage('pages/main.html');
                                 }
                             });
@@ -104,7 +104,7 @@
         }
 
         function entrarConfig() {
-            if($("#txt_url_config").val().trim() == "" )
+            if($("#txt_url_config").val().replace("http://","").trim() == "" )
             {
                 alert("Debe de ingresar la url del servidor!");
                 return;
@@ -158,7 +158,7 @@
         <hr />
         <div class="form-group has-feedback" id="AppSegPassConfig" style="display:none">
             <div class="input-group" style="width: 100%;padding-bottom: 15px">
-                <input id="txt_url_config" type="text" class="form-control" placeholder="Url Servidor" onkeypress="return UrlEvent(event);">
+                <input id="txt_url_config" type="text" class="form-control" placeholder="Url Servidor" onkeypress="return UrlEvent(event);" value="http://">
                 <span class="glyphicon glyphicon-cog form-control-feedback"></span>
             </div>
             <div class="input-group" style="width: 100%;">
